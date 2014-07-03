@@ -105,8 +105,9 @@ public class LoginActivity extends ActionBarActivity {
     }    
     
     public boolean adduUser(){
-    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/2";    	
-    	Reseau.putInputStreamUrl(url);        	
+    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/2";
+    	Reseau reseau = new Reseau();
+    	reseau.execute(url);
     	return true;
     }
     

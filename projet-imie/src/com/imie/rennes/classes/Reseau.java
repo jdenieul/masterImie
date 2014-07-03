@@ -23,10 +23,10 @@ import android.util.Log;
 
 public class Reseau extends AsyncTask<String,String,String>{
 
-
 	@Override
 	protected String doInBackground(String... params) {
 		try {
+			//String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
 			String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
 			Log.e("returnrequest",string);
 		} catch (IOException e) {
@@ -100,10 +100,15 @@ public class Reseau extends AsyncTask<String,String,String>{
 	            httpPost.setHeader("Content-type", "application/json");
 	            
 	            // 8. Execute POST request to the given URL
-	            HttpResponse httpResponse = httpclient.execute(httpPost);
+	            try {
+	            	HttpResponse httpResponse = httpclient.execute(httpPost);
+	            	content = httpResponse.getEntity().getContent();
+				} catch (Exception e) {
+					Log.e("log_tag", "Error in http connection", e);
+				}
 	 
 	            // 9. receive response as inputStream
-	            content = httpResponse.getEntity().getContent();
+	            
 	  		  
 	  	  } catch (Exception e) {
 	  	    Log.e("[PUT REQUEST]", "Network exception", e);
