@@ -68,9 +68,10 @@ public class Reseau extends AsyncTask<String,String,String>{
 	 
 	            // 3. build jsonObject
 	            Utilisateur utilisateur = new Utilisateur();
+	            utilisateur.setId(5);
 	            utilisateur.setNom("DENIEUL");
-	            utilisateur.setPrenom("Jérémy");
-	            utilisateur.setAdresse("48 rue Jean-François Millet");
+	            utilisateur.setPrenom("Jeremy");
+	            utilisateur.setAdresse("48 rue Jean-Francois Millet");
 	            utilisateur.setTelephone("06060606");
 	            utilisateur.setStatus(1);
 	            utilisateur.setLogin("j.denieul@gmail.com");
@@ -79,25 +80,34 @@ public class Reseau extends AsyncTask<String,String,String>{
 	            utilisateur.setPassword("1234");
 	                 
 	            JSONObject jsonObject = new JSONObject();
-	            jsonObject.put("utilisateur", utilisateur);	                       
+	            jsonObject.put("id", utilisateur.getId());
+	            jsonObject.put("nom", utilisateur.getNom());
+	            jsonObject.put("prenom", utilisateur.getPrenom());
+	            jsonObject.put("adresse", utilisateur.getAdresse());
+	            jsonObject.put("telephone", utilisateur.getTelephone());
+	            jsonObject.put("status", utilisateur.getStatus());
+	            jsonObject.put("login", utilisateur.getLogin());
+	            jsonObject.put("email", utilisateur.getEmail());
+	            jsonObject.put("langue", utilisateur.getLangue());
+	            jsonObject.put("password", utilisateur.getPassword());
+	            
+	            
 	            // 4. convert JSONObject to JSON to String
 	            json = jsonObject.toString();
+	            Log.e("json", json);
 	 
-	            // 5. set json to StringEntity
-	            StringEntity se = new StringEntity(json);
+	            // 5. set httpPost Entity
+	            httpPut.setEntity(new StringEntity(json, "UTF8"));
 	 
-	            // 6. set httpPost Entity
-	            httpPut.setEntity(se);
-	 
-	            // 7. Set some headers to inform server about the type of the content   
-	            httpPut.setHeader("Accept", "application/json");
+	            // 6. Set some headers to inform server about the type of the content   
 	            httpPut.setHeader("Content-type", "application/json");
 	            
-	            // 8. Execute POST request to the given URL
+	            // 7. Execute POST request to the given URL
 	            HttpResponse httpResponse = httpclient.execute(httpPut);
 	 
-	            // 9. receive response as inputStream
+	            // 8. receive response as inputStream
 	            int value = (int)httpResponse.getStatusLine().getStatusCode();
+	            Log.e("code", Integer.toString(value));
 	            content = httpResponse.getEntity().getContent();
 	            
 	  		  
