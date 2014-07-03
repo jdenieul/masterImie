@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
@@ -23,12 +24,13 @@ import android.util.Log;
 
 public class Reseau extends AsyncTask<String,String,String>{
 
+
 	@Override
 	protected String doInBackground(String... params) {
 		try {
+			
 			//String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
-			InputStream content = putInputStreamUrl(params[0]);
-			String string = IOUtils.toString(content);
+			String string = IOUtils.toString(putInputStreamUrl(params[0]));
 			Log.e("returnrequest",string);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -60,7 +62,7 @@ public class Reseau extends AsyncTask<String,String,String>{
 	            HttpClient httpclient = new DefaultHttpClient();
 	 
 	            // 2. make POST request to the given URL
-	            HttpPost httpPost = new HttpPost(url);
+	            HttpPut httpPut = new HttpPut(url);
 	 
 	            String json = "";
 	 
@@ -74,41 +76,29 @@ public class Reseau extends AsyncTask<String,String,String>{
 	            utilisateur.setLogin("j.denieul@gmail.com");
 	            utilisateur.setEmail("j.denieul@gmail.com");
 	            utilisateur.setLangue("FR");
+	            utilisateur.setPassword("1234");
+	                 
 	            JSONObject jsonObject = new JSONObject();
-	            jsonObject.accumulate("nom", utilisateur.getNom());
-	            jsonObject.accumulate("prenom", utilisateur.getPrenom());
-	            jsonObject.accumulate("adresse", utilisateur.getAdresse());
-	            jsonObject.accumulate("telephone", utilisateur.getTelephone());
-	            jsonObject.accumulate("status", utilisateur.getStatus());
-	            jsonObject.accumulate("login", utilisateur.getLogin());	           
-	            jsonObject.accumulate("email", utilisateur.getEmail());
-	            jsonObject.accumulate("langue", utilisateur.getLangue());
+	            jsonObject.put("utilisateur", utilisateur);	                       
 	            // 4. convert JSONObject to JSON to String
 	            json = jsonObject.toString();
-	 
-	            // ** Alternative way to convert Person object to JSON string usin Jackson Lib 
-	            // ObjectMapper mapper = new ObjectMapper();
-	            // json = mapper.writeValueAsString(person); 
 	 
 	            // 5. set json to StringEntity
 	            StringEntity se = new StringEntity(json);
 	 
 	            // 6. set httpPost Entity
-	            httpPost.setEntity(se);
+	            httpPut.setEntity(se);
 	 
 	            // 7. Set some headers to inform server about the type of the content   
-	            httpPost.setHeader("Accept", "application/json");
-	            httpPost.setHeader("Content-type", "application/json");
+	            httpPut.setHeader("Accept", "application/json");
+	            httpPut.setHeader("Content-type", "application/json");
 	            
 	            // 8. Execute POST request to the given URL
-	            try {
-	            	HttpResponse httpResponse = httpclient.execute(httpPost);
-	            	content = httpResponse.getEntity().getContent();
-				} catch (Exception e) {
-					Log.e("log_tag", "Error in http connection", e);
-				}
+	            HttpResponse httpResponse = httpclient.execute(httpPut);
 	 
 	            // 9. receive response as inputStream
+	            int value = (int)httpResponse.getStatusLine().getStatusCode();
+	            content = httpResponse.getEntity().getContent();
 	            
 	  		  
 	  	  } catch (Exception e) {
