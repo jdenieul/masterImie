@@ -27,7 +27,8 @@ public class Reseau extends AsyncTask<String,String,String>{
 	protected String doInBackground(String... params) {
 		try {
 			//String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
-			String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
+			InputStream content = putInputStreamUrl(params[0]);
+			String string = IOUtils.toString(content);
 			Log.e("returnrequest",string);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -49,7 +50,7 @@ public class Reseau extends AsyncTask<String,String,String>{
   	}
 	
 	
-	public static InputStream putInputStreamUrl(String url) {
+	public InputStream putInputStreamUrl(String url) {
 		
 	  	  InputStream content = null;
 	  	  try {

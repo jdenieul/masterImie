@@ -100,7 +100,7 @@ public class LoginActivity extends ActionBarActivity {
     
     public boolean verifUserMdp(Utilisateur utilsiateur){
     	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/2";    	
-    	Reseau.putInputStreamUrl(url);        	
+    	//Reseau.putInputStreamUrl(url);        	
     	return true;
     }    
     
