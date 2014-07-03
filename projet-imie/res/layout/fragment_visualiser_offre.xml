@@ -1,0 +1,129 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F0"
+    tools:context=".VisualiserOffreFragment" >
+    
+    <TextView
+        android:id="@+id/textViewTitrePage"
+        android:text="@string/text_voiroffre"
+      	style="@style/titreTextview" />
+    
+    <ScrollView
+	    android:id="@+id/ScrollView01"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_below="@+id/textViewTitrePage"
+	    android:layout_alignParentBottom="true" >
+    
+	    <RelativeLayout
+	        android:id="@+id/relativemaindeposeOffre"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="15dp"
+			android:layout_marginBottom="15dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp" >
+		
+		    <TextView
+		        android:id="@+id/textviewdatedebut"
+		        android:text="@string/textview_datedebut"
+		        android:layout_alignParentTop="true"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" />
+		    
+		   <EditText
+		        android:id="@+id/datepickerdatedebut"
+		        android:layout_width="wrap_content"
+		        android:focusable="false"
+		        android:layout_alignRight="@+id/textviewdatedebut"
+		        android:layout_below="@+id/textviewdatedebut"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewduree"
+		        android:text="@string/textview_duree"
+		        android:layout_alignLeft="@+id/edittextduree"
+		        android:layout_alignBottom="@+id/textviewdatedebut"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		    
+		   <EditText
+		        android:id="@+id/edittextduree"
+		        android:layout_width="wrap_content"
+		        android:focusable="false"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/datepickerdatedebut"
+		        android:layout_alignBottom="@+id/datepickerdatedebut"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewtypedecontrat"
+		        android:text="@string/textview_typedecontrat"
+		        android:layout_below="@+id/datepickerdatedebut"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <TextView 
+			    android:id="@+id/spinnertypedecontrat"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_below="@+id/textviewtypedecontrat"
+			    android:focusable="false"
+			    style="@style/CustomEditTextView"
+			/>
+		   
+		   <TextView
+		        android:id="@+id/textviewdetailcontact"
+		        android:text="@string/textview_detailcontact"
+		        android:layout_below="@+id/spinnertypedecontrat"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		        android:id="@+id/edittextdetailcontact"
+		        android:layout_below="@+id/textviewdetailcontact"
+		        android:focusable="false"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewemailcontact"
+		        android:text="@string/textview_emailcontact"
+		        android:layout_below="@+id/edittextdetailcontact"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		        android:id="@+id/edittextemailcontact"
+		        android:layout_below="@+id/textviewemailcontact"
+		        android:focusable="false"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewdescription"
+		        android:text="@string/textview_description"
+		        android:layout_below="@+id/edittextemailcontact"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		        android:id="@+id/edittextdescription"
+		        android:focusable="false"
+		        android:lines="8"
+			    android:minLines="6"
+			    android:gravity="top|left"
+			    android:maxLines="10"
+		        android:layout_below="@+id/textviewdescription"
+		        style="@style/CustomEditTextView" />
+		   
+		    
+	    </RelativeLayout>
+	</ScrollView>
+
+</RelativeLayout>

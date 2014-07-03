@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F0"
+    android:orientation="vertical"
+    tools:context=".profilFragment" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewTCompetence"
+                style="@style/titreTextview"
+                android:text="@string/text_profil_etu_competences" />
+
+            <ImageButton
+                android:id="@+id/ajouterCompetence"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/textViewTCompetence"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:contentDescription="@string/text_descimagebutton"
+                android:src="@drawable/add" />
+
+            <com.fortysevendeg.swipelistview.SwipeListView
+                android:id="@+id/lvCompetences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewTCompetence"
+                swipe:swipeBackView="@+id/back"
+                swipe:swipeCloseAllItemsWhenMoveList="true"
+                swipe:swipeDrawableChecked="@drawable/choice_selected"
+                swipe:swipeDrawableUnchecked="@drawable/choice_unselected"
+                swipe:swipeFrontView="@+id/front"
+                swipe:swipeMode="both" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewExperience"
+                style="@style/titreTextview"
+                android:layout_below="@+id/lvCompetence"
+                android:text="@string/text_profil_etu_experiences" />
+
+            <ImageButton
+                android:id="@+id/ajouterExperience"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/textViewExperience"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:clickable="true"
+                android:contentDescription="@string/text_descimagebutton"
+                android:src="@drawable/add" />
+
+            <com.fortysevendeg.swipelistview.SwipeListView
+                android:id="@+id/lvExperiences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewExperience"
+                swipe:swipeBackView="@+id/back"
+                swipe:swipeCloseAllItemsWhenMoveList="true"
+                swipe:swipeDrawableChecked="@drawable/choice_selected"
+                swipe:swipeDrawableUnchecked="@drawable/choice_unselected"
+                swipe:swipeFrontView="@+id/front"
+                swipe:swipeMode="both" />
+        </RelativeLayout>
+ 
+
+    <Button
+        android:id="@+id/btnVoirCV"
+        style="@style/btnStyleBeige"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/text_profil_etu_cv" />
+   </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F0"
+    tools:context=".OffreFragment" >
+    
+     
+       <TextView
+      	android:id="@+id/textViewTitreOffre"
+      	android:text="@string/text_offres_partenaires"
+     	style="@style/titreTextview" />
+
+
+      <com.fortysevendeg.swipelistview.SwipeListView
+          android:id="@+id/listViewOffre"
+          android:layout_width="match_parent"
+          android:layout_height="fill_parent"
+          android:layout_above="@+id/buttonDeposerOffre"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentRight="true"
+          android:layout_below="@+id/textViewTitreOffre"
+          swipe:swipeBackView="@+id/back"
+          swipe:swipeCloseAllItemsWhenMoveList="true"
+          swipe:swipeDrawableChecked="@drawable/choice_selected"
+          swipe:swipeDrawableUnchecked="@drawable/choice_unselected"
+          swipe:swipeFrontView="@+id/front"
+          swipe:swipeMode="both" />
+      
+      <Button
+         	android:id="@+id/buttonDeposerOffre"
+         	android:layout_width="wrap_content"
+         	android:layout_height="wrap_content"
+         	android:layout_alignParentBottom="true"
+         	android:layout_alignParentLeft="true"
+         	android:layout_alignParentRight="true"
+         	android:layout_marginBottom="10dp"
+         	android:layout_marginLeft="10dp"
+         	android:layout_marginRight="10dp"
+         	style="@style/btnStyleBeige"
+         	android:text="@string/text_deposer_offre" />
+
+</RelativeLayout>

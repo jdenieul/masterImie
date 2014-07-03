@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VisualiserMessageFragment" >
+    
+
+ <TextView
+        android:id="@+id/textViewTitrePage"
+        android:text="@string/text_creation_message_sujet"
+      	style="@style/titreTextview" />
+    
+    <ScrollView
+        android:id="@+id/ScrollView01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textViewTitrePage" >
+    
+	    <RelativeLayout
+	        android:id="@+id/relativemaindeposeOffre"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="15dp"
+			android:layout_marginBottom="15dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp" >
+			
+		   <TextView
+		        android:id="@+id/textviewcorpsmessage"
+		        android:text="@string/text_creation_message_corps"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		       android:id="@+id/edittextcorpsmessage"
+		       style="@style/CustomEditTextView"
+		       android:layout_below="@+id/textviewcorpsmessage"
+		       android:height="300dp"
+		       android:ems="10"
+		       android:inputType="textMultiLine" />
+
+	    </RelativeLayout>
+	</ScrollView>
+</RelativeLayout>

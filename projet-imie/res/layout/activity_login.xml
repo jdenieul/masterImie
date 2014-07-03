@@ -1,0 +1,123 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".LoginActivity" >
+    
+   <RelativeLayout 
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true"
+       android:layout_alignParentRight="true"
+       android:layout_marginTop="20dp"
+       android:layout_marginBottom="70dp"
+       android:layout_marginLeft="20dp"
+       android:layout_marginRight="20dp"
+       android:background="@drawable/background_popup" >
+       
+        <TextView
+            android:id="@+id/textViewLoginTitreConnexion"
+            android:text="@string/text_login_titre_connexion"
+            style="@style/titreTextview" />
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+       		android:layout_height="wrap_content"
+       		android:layout_below="@+id/textViewLoginTitreConnexion"
+       		android:layout_above="@+id/buttonConnexion"
+       		android:gravity="center"
+       		android:layout_marginTop="5dp"
+		    android:layout_marginBottom="5dp"
+		    android:layout_marginLeft="15dp"
+		    android:layout_marginRight="15dp" >
+        
+	        <ImageView
+		            android:id="@+id/imageViewMail"
+		            android:layout_width="40dp"
+		            android:layout_height="40dp"
+		            android:layout_alignParentTop="true"
+		            android:contentDescription="@string/text_login"
+		            android:src="@drawable/icon_mail" />
+	        
+	         <TextView
+		            android:id="@+id/textViewLogin"
+		            android:layout_width="wrap_content"
+		            android:layout_height="40dp"
+		            android:gravity="center_vertical"
+		            android:layout_toRightOf="@+id/imageViewMail"
+		            android:layout_alignBottom="@+id/imageViewMail"
+		            android:text="@string/text_login"
+		            android:paddingLeft="5dp" />
+	         
+	         <EditText
+		            android:id="@+id/editTextLogin"
+		            android:layout_marginTop="5dp"
+		            android:layout_below="@+id/imageViewMail"
+		            android:hint="@string/text_login_placeholder_email"
+		            android:inputType="textWebEmailAddress"
+		            style="@style/CustomEditTextView" >
+		            <requestFocus />
+		     </EditText>
+	         
+	         <ImageView
+		            android:id="@+id/imageViewMdp"
+		            android:layout_width="40dp"
+		            android:layout_height="40dp"
+		            android:layout_marginTop="20dp"
+		            android:layout_below="@+id/editTextLogin"
+		            android:contentDescription="@string/text_login"
+		            android:src="@drawable/icon_lock" />
+	         
+	         <TextView
+		            android:id="@+id/textViewMdp"
+		            android:layout_width="wrap_content"
+		            android:layout_height="40dp"
+		            android:gravity="center_vertical"
+		            android:layout_toRightOf="@+id/imageViewMdp"
+		            android:layout_alignBottom="@+id/imageViewMdp"
+		            android:text="@string/text_MDP"
+		            android:paddingLeft="5dp" />
+	         
+	         <EditText
+		            android:id="@+id/editTextMdp"
+		            android:layout_marginTop="5dp"
+		            android:layout_below="@+id/imageViewMdp"
+		            android:hint="@string/text_login_placeholder_mdp"
+		            android:inputType="textPassword"
+		            style="@style/CustomEditTextView" />
+			
+	         <CheckBox
+		            android:id="@+id/checkBoxConnexion"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_below="@+id/editTextMdp"
+		            android:layout_marginTop="15dp"
+		            android:text="@string/text_connecter" />
+	    </RelativeLayout>
+	
+        <Button
+            android:id="@+id/buttonConnexion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/text_connexion"
+            style="@style/btnStyleBeige" />
+        
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/textViewLoginAppel"
+        android:text="@string/text_login_titre_numero_aide"
+        android:layout_alignParentBottom="true"
+        style="@style/titreTextview" />
+
+</RelativeLayout>

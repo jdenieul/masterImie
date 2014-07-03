@@ -1,0 +1,121 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F0"
+    tools:context=".LoginActivity" >
+
+    <TextView
+        android:id="@+id/textViewTitreMessage"
+        android:layout_alignParentTop="true"
+        android:text="@string/text_modifier_mdp"
+        style="@style/compatTitreOrange"/>
+    
+    <RelativeLayout 
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+    	android:paddingRight="@dimen/activity_horizontal_margin"
+    	android:layout_below="@+id/textViewTitreMessage"
+    	android:layout_alignParentBottom="true"
+    	android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+	    <TextView
+	        android:id="@+id/textViewOldMdp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:layout_marginTop="30dp"
+	        android:text="@string/text_old_MDP" />
+	
+	    <EditText
+	        android:id="@+id/editTextOldMdp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/textViewOldMdp"
+	        android:layout_alignBottom="@+id/textViewOldMdp"
+	        android:layout_alignLeft="@+id/editTextNewMdp"
+	        android:layout_alignParentRight="true"
+	        android:ems="10"
+	        android:inputType="textPassword"
+	         style="@style/CustomEditTextView">
+	        <requestFocus />
+	    </EditText>
+	    
+	    <TextView
+	        android:id="@+id/textViewNewMdp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/textViewOldMdp"
+	        android:layout_marginTop="30dp"
+	        android:text="@string/text_new_MDP" />
+	
+	    <EditText
+	        android:id="@+id/editTextNewMdp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/textViewNewMdp"
+	        android:layout_alignBottom="@+id/textViewNewMdp"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginLeft="17dp"
+	        android:layout_toRightOf="@+id/textViewNewMdp"
+	        android:ems="10"
+	        android:inputType="textPassword"
+	        style="@style/CustomEditTextView" />
+	    
+	    <TextView
+	        android:id="@+id/textViewNewAgainMdp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@+id/textViewNewMdp"
+	        android:layout_marginTop="30dp"
+	        android:text="@string/text_new_again_MDP" />
+	
+	    <EditText
+	        android:id="@+id/editTextNewAgainMdp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/textViewNewAgainMdp"
+	        android:layout_alignBottom="@+id/textViewNewAgainMdp"
+	        android:layout_alignLeft="@+id/editTextNewMdp"
+	        android:layout_alignParentRight="true"
+	        android:ems="10"
+	        android:inputType="textPassword"
+	        style="@style/CustomEditTextView" />
+    
+    
+	     <Button
+	        android:id="@+id/buttonSupprimer"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_above="@+id/buttonAnnuler"
+	        android:layout_marginBottom="22dp"
+	        style="@style/btnStyleBeige"
+	        android:text="@string/text_supprimer_compte" />
+	
+	    <Button
+	        android:id="@+id/buttonAnnuler"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginBottom="22dp"
+	        style="@style/btnStyleBeige"
+	        android:text="@string/text_annulation" />
+	
+	    <Button
+	        android:id="@+id/buttonEnvoyer"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignBaseline="@+id/buttonAnnuler"
+	        style="@style/btnStyleBeige"
+	        android:text="@string/text_envoie" />
+	    
+	 </RelativeLayout>
+
+</RelativeLayout>

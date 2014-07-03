@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F0"
+    tools:context=".EnvoiMessageFragment" >
+
+ <TextView
+        android:id="@+id/textViewTitrePage"
+        android:text="@string/text_creation_message"
+      	style="@style/titreTextview" />
+    
+    <ScrollView
+	    android:id="@+id/ScrollView01"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_below="@+id/textViewTitrePage"
+	    android:layout_above="@+id/buttonEnvoyer" >
+    
+	    <RelativeLayout
+	        android:id="@+id/relativemaindeposeOffre"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="15dp"
+			android:layout_marginBottom="15dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp" >
+	    
+		    <TextView
+		        android:id="@+id/textviewtitrecreationmessage"
+		        android:text="@string/text_creation_message_destinataires"
+		        android:layout_alignParentTop="true"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" />
+		
+		    <MultiAutoCompleteTextView
+		        android:id="@+id/editTextDestinataires"
+		        android:inputType="textAutoComplete"		        
+		       	android:ems="10"
+		        android:layout_below="@+id/textviewtitrecreationmessage"
+		        style="@style/CustomEditTextView" >
+		
+		        <requestFocus />
+		    </MultiAutoCompleteTextView>
+		
+		    <TextView
+		        android:id="@+id/textviewsujet"
+		        android:text="@string/text_creation_message_sujet"
+		        android:layout_below="@+id/editTextDestinataires"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		    
+		   <EditText
+		        android:id="@+id/editTextSujet"
+		        android:focusable="false"
+		        android:inputType="text"
+		        android:layout_below="@+id/textviewsujet"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewcorpsmessage"
+		        android:text="@string/text_creation_message_corps"
+		        android:layout_below="@+id/editTextSujet"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		       android:id="@+id/edittextcorpsmessage"
+		       style="@style/CustomEditTextView"
+		       android:layout_below="@+id/textviewcorpsmessage"
+		       android:height="150dp"
+		       android:ems="10"
+		       android:inputType="textMultiLine" />
+
+	    </RelativeLayout>
+	</ScrollView>
+
+    <Button
+        android:id="@+id/buttonEnvoyer"
+        android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+       	android:layout_alignParentBottom="true"
+       	android:layout_alignParentLeft="true"
+       	android:layout_alignParentRight="true"
+       	android:layout_marginBottom="10dp"
+       	android:layout_marginLeft="10dp"
+       	android:layout_marginRight="10dp"
+       	style="@style/btnStyleBeige"
+        android:text="@string/text_envoie" />
+
+</RelativeLayout>

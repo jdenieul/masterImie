@@ -1,0 +1,136 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+	
+    <style name="titreTextview" parent="android:attr/listSeparatorTextViewStyle">
+       <item name="android:textColor">#FFFFFF</item>
+       <item name="android:textSize">15sp</item>
+       <item name="android:background">#004152</item>
+	   <item name="android:paddingTop">10dp</item>
+	   <item name="android:paddingBottom">10dp</item>
+       <item name="android:gravity">center</item>
+       <item name="android:layout_width">match_parent</item>
+       <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="compatTitreOrange" parent="titreTextview">
+
+     </style>
+     
+    <style name="CustomEditTextView">
+        <item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:ems">10</item>
+		<item name="android:background">@drawable/custom_edittext</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:paddingRight">10dp</item>
+		<item name="android:paddingLeft">10dp</item>
+    </style>
+    
+	<!-- Style boutons -->
+	<style name="btnStyleBeige" parent="@android:style/Widget.Button">
+       <item name="android:textSize">15sp</item>
+       <item name="android:textStyle">bold</item>
+       <item name="android:textColor">#FFFFFF</item>
+       <item name="android:gravity">center</item>
+       <item name="android:shadowColor">#000000</item>
+       <item name="android:shadowDx">0</item>
+       <item name="android:shadowDy">0</item>
+       <item name="android:shadowRadius">0</item>
+	   <item name="android:background">@drawable/button_selector</item>
+       <item name="android:padding">10dip</item>
+   </style>
+
+	
+	<style name="btnStyleRouge" parent="@android:style/Widget.Button">
+       <item name="android:textSize">15sp</item>
+       <item name="android:textStyle">bold</item>
+       <item name="android:textColor">#FFFFFF</item>
+       <item name="android:gravity">center</item>
+       <item name="android:shadowColor">#000000</item>
+       <item name="android:shadowDx">0</item>
+       <item name="android:shadowDy">0</item>
+       <item name="android:shadowRadius">0</item>
+	   <item name="android:background">@drawable/button_offres</item>
+       <item name="android:padding">10dip</item>
+   </style>
+
+	<style name="btnStyleBleuCLair" parent="@android:style/Widget.Button">
+       <item name="android:textSize">15sp</item>
+       <item name="android:textStyle">bold</item>
+       <item name="android:textColor">#FFFFFF</item>
+       <item name="android:gravity">center</item>
+       <item name="android:shadowColor">#000000</item>
+       <item name="android:shadowDx">0</item>
+       <item name="android:shadowDy">0</item>
+       <item name="android:shadowRadius">0</item>
+	   <item name="android:background">@drawable/button_message</item>
+       <item name="android:padding">10dip</item>
+   </style>
+
+	<style name="btnStyleBleuFonce" parent="@android:style/Widget.Button">
+       <item name="android:textSize">15sp</item>
+       <item name="android:textStyle">bold</item>
+       <item name="android:textColor">#FFFFFF</item>
+       <item name="android:gravity">center</item>
+       <item name="android:shadowColor">#000000</item>
+       <item name="android:shadowDx">0</item>
+       <item name="android:shadowDy">0</item>
+       <item name="android:shadowRadius">0</item>
+	   <item name="android:background">@drawable/button_profil</item>
+       <item name="android:padding">10dip</item>
+   </style>
+	<!-- Fin style  boutons -->
+
+	<style name="MyListBackContent">
+        <item name="android:background">@drawable/background_back</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">70dp</item>
+    </style>
+
+    <style name="MyListFrontContent">
+        <item name="android:background">@drawable/background_popup</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">70dp</item>
+    </style>
+    
+      <style name="MyListButtonAction">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">30dp</item>
+     
+    </style>
+    
+      
+      <style name="MyListImage">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:scaleGravity">fill</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="MyListTitle">
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+</resources>

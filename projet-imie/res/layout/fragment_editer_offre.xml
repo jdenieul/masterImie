@@ -1,0 +1,159 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F2F0"
+    tools:context=".EditionOffreFragment" >
+    
+    <TextView
+        android:id="@+id/textViewTitrePage"
+        android:text="@string/text_edition_offre"
+      	style="@style/titreTextview" />
+    
+    <ScrollView
+	    android:id="@+id/ScrollView01"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_below="@+id/textViewTitrePage"
+	    android:layout_above="@+id/buttonEnvoyer"
+	    android:layout_marginBottom="10dp" >
+    
+	    <RelativeLayout
+	        android:id="@+id/relativemaindeposeOffre"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="15dp"
+			android:layout_marginBottom="15dp"
+			android:layout_marginLeft="15dp"
+			android:layout_marginRight="15dp" >
+	    
+		    <TextView
+		        android:id="@+id/textviewtitreannonce"
+		        android:text="@string/text_titre_annonce"
+		        android:layout_alignParentTop="true"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" />
+		
+		    <EditText
+		        android:id="@+id/editText1"
+		        android:inputType="text"
+		        android:layout_below="@+id/textviewtitreannonce"
+		        style="@style/CustomEditTextView" >
+		
+		        <requestFocus />
+		    </EditText>
+		
+		    <TextView
+		        android:id="@+id/textviewdatedebut"
+		        android:text="@string/textview_datedebut"
+		        android:layout_below="@+id/editText1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		    
+		   <EditText
+		        android:id="@+id/datepickerdatedebut"
+		        android:layout_width="wrap_content"
+		        android:focusable="false"
+		        android:layout_below="@+id/textviewdatedebut"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewduree"
+		        android:text="@string/textview_duree"
+		        android:layout_alignLeft="@+id/edittextduree"
+		        android:layout_alignBottom="@+id/textviewdatedebut"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		    
+		   <EditText
+		        android:id="@+id/edittextduree"
+		        android:layout_width="wrap_content"
+		        android:layout_toRightOf="@+id/datepickerdatedebut"
+		        android:layout_alignBottom="@+id/datepickerdatedebut"
+		        android:inputType="number"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewtypedecontrat"
+		        android:text="@string/textview_typedecontrat"
+		        android:layout_below="@+id/datepickerdatedebut"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <Spinner 
+			    android:id="@+id/spinnertypedecontrat"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_below="@+id/textviewtypedecontrat"
+			    android:drawSelectorOnTop="true"
+			    android:entries="@array/array_names"
+			    android:entryValues="@array/array_name_values"
+			    style="@style/CustomEditTextView"
+			/>
+		   
+		   <TextView
+		        android:id="@+id/textviewdetailcontact"
+		        android:text="@string/textview_detailcontact"
+		        android:layout_below="@+id/spinnertypedecontrat"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		        android:id="@+id/edittextdetailcontact"
+		        android:layout_below="@+id/textviewdetailcontact"
+		        android:inputType="text"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewemailcontact"
+		        android:text="@string/textview_emailcontact"
+		        android:layout_below="@+id/edittextdetailcontact"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		        android:id="@+id/edittextemailcontact"
+		        android:layout_below="@+id/textviewemailcontact"
+		        android:inputType="textEmailAddress"
+		        style="@style/CustomEditTextView" />
+		   
+		   <TextView
+		        android:id="@+id/textviewdescription"
+		        android:text="@string/textview_description"
+		        android:layout_below="@+id/edittextemailcontact"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="20dp" />
+		   
+		   <EditText
+		        android:id="@+id/edittextdescription"
+		        android:lines="8"
+			    android:minLines="6"
+			    android:gravity="top|left"
+			    android:maxLines="10"
+		        android:layout_below="@+id/textviewdescription"
+		        style="@style/CustomEditTextView" />
+		   
+		    
+	    </RelativeLayout>
+	</ScrollView>
+
+    <Button
+        android:id="@+id/buttonEnvoyer"
+        android:layout_width="wrap_content"
+       	android:layout_height="wrap_content"
+       	android:layout_alignParentBottom="true"
+       	android:layout_alignParentLeft="true"
+       	android:layout_alignParentRight="true"
+       	android:layout_marginBottom="10dp"
+       	android:layout_marginLeft="10dp"
+       	android:layout_marginRight="10dp"
+       	style="@style/btnStyleBeige"
+        android:text="@string/textbutton_offre" />
+
+</RelativeLayout>
