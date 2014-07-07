@@ -30,29 +30,35 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Switch;
 
-public class Reseau extends AsyncTask<Object,Void,bool>{
+public class Reseau extends AsyncTask<Object,Void,Integer>{
 	Context context;
+	Integer param;
 
 
 	@Override
-	protected bool doInBackground(Object... params) {
-		try {
-			int param = Integer.parseInt((String)params[0]);
-			switch (param){
-				case 1:
-					String string = IOUtils.toString(CreateUser((String)params[1]));
-					context = (Context)params[2];
-					break;
-				default:
-					break;
-			}
-			//String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	protected Integer doInBackground(Object... params) {
+		int result = 0;
+		param = Integer.parseInt((String)params[0]);
+		switch (param){
+			case 1:
+				result = CreateUser((String)params[1]);
+				context = (Context)params[2];
+				break;
+			default:
+				break;
 		}
-		return null;
+		//String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
+		return result;
 	}
+	
+	@Override
+	   protected void onPostExecute(Integer result) {
+			if((param == 1  && result == 200) || (param == 1 && result == 201)){
+				Intent monIntent = new Intent(context, MainActivity.class);
+				context.startActivity(monIntent);
+			}
+	   }
+	
 
 	public static InputStream getInputStreamFromUrl(Object url) {
   	  InputStream content = null;
@@ -67,7 +73,7 @@ public class Reseau extends AsyncTask<Object,Void,bool>{
   	}
 	
 	
-	public InputStream CreateUser(String url) {
+	public int CreateUser(String url) {
 		
 	  	  InputStream content = null;
 	  	  try {
@@ -124,14 +130,13 @@ public class Reseau extends AsyncTask<Object,Void,bool>{
 	            int value = (int)httpResponse.getStatusLine().getStatusCode();
 	            Log.e("code", Integer.toString(value));
 	            content = httpResponse.getEntity().getContent();
-	            Intent monIntent = new Intent(context, MainActivity.class);
-	    		context.startActivity(monIntent);
+	            return value;
 	            
 	  		  
 	  	  } catch (Exception e) {
 	  	    Log.e("[PUT REQUEST]", "Network exception", e);
 	  	  }
-	  	    return content;
+		return 0;
   	}
 
 }
