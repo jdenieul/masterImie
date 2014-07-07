@@ -98,9 +98,9 @@ public class LoginActivity extends ActionBarActivity {
     }    
     
     public boolean adduUser(){
-    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/5.json";
+    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/7.json";
     	Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(5);
+        utilisateur.setId(7);
         utilisateur.setNom("DENIEUL");
         utilisateur.setPrenom("Jeremy");
         utilisateur.setAdresse("48 rue Jean-Francois Millet");

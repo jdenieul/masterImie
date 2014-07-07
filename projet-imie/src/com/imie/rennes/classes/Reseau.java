@@ -119,15 +119,17 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	            jsonObject.put("login", utilisateur.getLogin());
 	            jsonObject.put("email", utilisateur.getEmail());
 	            jsonObject.put("langue", utilisateur.getLangue());
-	            jsonObject.put("password", utilisateur.getPassword());
 	            
 	            
 	            // 4. convert JSONObject to JSON to String
 	            String json = jsonObject.toString();
 	            Log.e("json", json);
+	            
+	            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		        nameValuePairs.add(new BasicNameValuePair("object", json)); 
 	 
 	            // 5. set httpPost Entity
-	            httpPut.setEntity(new StringEntity(json, "UTF8"));
+	            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	 
 	            // 6. Set some headers to inform server about the type of the content   
 	            httpPut.setHeader("Content-type", "application/json");
