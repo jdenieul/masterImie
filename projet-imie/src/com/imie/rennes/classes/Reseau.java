@@ -19,13 +19,19 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.imie.rennes.mainActivity.LoginActivity;
+import com.imie.rennes.mainActivity.MainActivity;
+
 import android.R.bool;
 import android.R.string;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Switch;
 
 public class Reseau extends AsyncTask<Object,Void,bool>{
+	Context context;
 
 
 	@Override
@@ -35,6 +41,7 @@ public class Reseau extends AsyncTask<Object,Void,bool>{
 			switch (param){
 				case 1:
 					String string = IOUtils.toString(CreateUser((String)params[1]));
+					context = (Context)params[2];
 					break;
 				default:
 					break;
@@ -117,6 +124,8 @@ public class Reseau extends AsyncTask<Object,Void,bool>{
 	            int value = (int)httpResponse.getStatusLine().getStatusCode();
 	            Log.e("code", Integer.toString(value));
 	            content = httpResponse.getEntity().getContent();
+	            Intent monIntent = new Intent(context, MainActivity.class);
+	    		context.startActivity(monIntent);
 	            
 	  		  
 	  	  } catch (Exception e) {

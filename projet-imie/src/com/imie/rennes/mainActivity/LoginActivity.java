@@ -94,8 +94,6 @@ public class LoginActivity extends ActionBarActivity {
 		editor.putString("CURRENT_USER", utilisateur.getSerializableString());
 		editor.commit();
 		adduUser();
-		Intent monIntent = new Intent(LoginActivity.this, MainActivity.class);
-		startActivity(monIntent);
     }
     
     public boolean verifUserMdp(Utilisateur utilsiateur){
@@ -107,7 +105,7 @@ public class LoginActivity extends ActionBarActivity {
     public boolean adduUser(){
     	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/5.json";
     	Reseau r = new Reseau();
-    	r.execute("1",url);
+    	r.execute("1",url, getApplicationContext());
     	//Reseau.putInputStreamUrl(url);        	
     	return true;
     }
