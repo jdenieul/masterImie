@@ -117,6 +117,8 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
   	}
 	
 	
+	
+	//Creation of a User
 	public int CreateUser(String url, Utilisateur utilisateur) {
 		
 	  	  try {
@@ -169,6 +171,8 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 		return 0;
   	}
 	
+	
+	//Creation dune offre
 	public int CreateOffre(Offre offre){
 		try {
 	  		String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/offre/"+offre.getId()+".json";
@@ -219,6 +223,8 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	return 0;
 	}
 	
+	
+	//Creation d'une competence
 	public int CreateCompetence(Competence competence){
 		try {
 	  		String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/competence/"+competence.getId()+".json";
@@ -263,6 +269,8 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	return 0;
 	}
 	
+	
+	//Login
 	public int Login(String url, String login, String mdp){
     	byte[] data = null;
     	try {
