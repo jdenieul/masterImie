@@ -87,8 +87,6 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	            // 2. make POST request to the given URL
 	            HttpPut httpPut = new HttpPut(url);
 	 
-	            String json = "";
-	 
 	            // 3. build jsonObject	                 
 	            JSONObject jsonObject = new JSONObject();
 	            jsonObject.put("id", utilisateur.getId());
@@ -104,7 +102,7 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	            
 	            
 	            // 4. convert JSONObject to JSON to String
-	            json = jsonObject.toString();
+	            String json = jsonObject.toString();
 	            Log.e("json", json);
 	 
 	            // 5. set httpPost Entity
