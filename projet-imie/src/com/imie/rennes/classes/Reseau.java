@@ -19,19 +19,27 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.R.bool;
+import android.R.string;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Switch;
 
-public class Reseau extends AsyncTask<String,String,String>{
+public class Reseau extends AsyncTask<Object,Void,bool>{
 
 
 	@Override
-	protected String doInBackground(String... params) {
+	protected bool doInBackground(Object... params) {
 		try {
-			
+			int param = Integer.parseInt((String)params[0]);
+			switch (param){
+				case 1:
+					String string = IOUtils.toString(CreateUser((String)params[1]));
+					break;
+				default:
+					break;
+			}
 			//String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
-			String string = IOUtils.toString(putInputStreamUrl(params[0]));
-			Log.e("returnrequest",string);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -39,11 +47,11 @@ public class Reseau extends AsyncTask<String,String,String>{
 		return null;
 	}
 
-	public static InputStream getInputStreamFromUrl(String url) {
+	public static InputStream getInputStreamFromUrl(Object url) {
   	  InputStream content = null;
   	  try {
   	    HttpClient httpclient = new DefaultHttpClient();
-  	    HttpResponse response = httpclient.execute(new HttpGet(url));
+  	    HttpResponse response = httpclient.execute(new HttpGet((String)url));
   	    content = response.getEntity().getContent();
   	  } catch (Exception e) {
   	    Log.e("[GET REQUEST]", "Network exception", e);
@@ -52,7 +60,7 @@ public class Reseau extends AsyncTask<String,String,String>{
   	}
 	
 	
-	public InputStream putInputStreamUrl(String url) {
+	public InputStream CreateUser(String url) {
 		
 	  	  InputStream content = null;
 	  	  try {
