@@ -1,18 +1,27 @@
 package com.imie.rennes.classes;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+
 import com.imie.rennes.mainActivity.MainActivity;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 public class Reseau extends AsyncTask<Object,Void,Integer>{
@@ -31,8 +40,13 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 		int result = 0;
 		param = Integer.parseInt((String)params[0]);
 		switch (param){
+			//Creation user
 			case 1:
 				result = CreateUser((String)params[1], (Utilisateur)params[2]);
+				break;
+			//Login
+			case 2:
+				result = Login((String)params[1], (String)params[2], (String)params[3]);
 				break;
 			default:
 				break;
@@ -45,6 +59,11 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	protected void onPostExecute(Integer result) {
 		//En cas d'utilisateur creer ou mise à jour
 		if((param == 1  && result == 200) || (param == 1 && result == 201)){
+			Intent monIntent = new Intent(context, MainActivity.class);
+			context.startActivity(monIntent);
+		}
+		//Login
+		if(param == 2  && result == 200){
 			Intent monIntent = new Intent(context, MainActivity.class);
 			context.startActivity(monIntent);
 		}
@@ -124,5 +143,36 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	  	  }
 		return 0;
   	}
+	
+	public int Login(String url, String login, String mdp){
+    	byte[] data = null;
+    	try {
+            data = mdp.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+        e1.printStackTrace();
+        }
+    	String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+		// Create a new HttpClient and Post Header
+	    HttpClient httpclient = new DefaultHttpClient();
+	    HttpPost httppost = new HttpPost(url);
+
+	    try {
+	        // Add your data
+	        httppost.setEntity(new StringEntity(login));
+	        httppost.setEntity(new StringEntity(base64.toString()));
+
+	        // Execute HTTP Post Request
+	        HttpResponse response = httpclient.execute(httppost);
+	        int value = (int)response.getStatusLine().getStatusCode();
+	        Log.e("code", Integer.toString(value));
+	        return value;
+	        
+	    } catch (ClientProtocolException e) {
+	        // TODO Auto-generated catch block
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	    }
+	    return 0;
+	}
 
 }
