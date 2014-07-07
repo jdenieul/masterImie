@@ -1,9 +1,12 @@
 package network;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -11,17 +14,13 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.joda.time.DateTime;
 import org.json.JSONObject;
-
 import com.imie.rennes.classes.Offre;
 import com.imie.rennes.imienetwork.OffreFragment;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
@@ -44,6 +43,9 @@ public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
 			case 1:
 				result = CreateOffre((Offre)params[1]);
 				break;
+			case 3:
+				result = DeleteOffre((String)params[1]);
+				break;
 			default:
 				break;
 		}
@@ -55,6 +57,10 @@ public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
 	protected void onPostExecute(Integer result) {
 		//Creation Offre
 		if((param == 1  && result == 200) || (param == 1 && result == 201)){
+			Intent monIntent = new Intent(context, OffreFragment.class);
+			context.startActivity(monIntent);
+		}
+		if((param == 3  && result == 200) || (param == 3 && result == 201)){
 			Intent monIntent = new Intent(context, OffreFragment.class);
 			context.startActivity(monIntent);
 		}
@@ -87,13 +93,13 @@ public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
             jsonObject.put("id", offre.getId());
             jsonObject.put("titre", offre.getTitre());
             jsonObject.put("description", offre.getDescription());
+            jsonObject.put("detailsContact", offre.getDetailsContact());
+            jsonObject.put("duree", offre.getDuree());
+            jsonObject.put("typePoste", offre.getTypePoste());
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date date = new Date(offre.getDateDebut().getTimeInMillis());
             String Date = formatter.format(date);
             jsonObject.put("dateDebut", Date);
-            jsonObject.put("detailsContact", offre.getDetailsContact());
-            jsonObject.put("duree", Integer.toString(offre.getDuree()));
-            jsonObject.put("typePoste", offre.getTypePoste());
             
             
             // 4. convert JSONObject to JSON to String
@@ -122,6 +128,29 @@ public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
   	    Log.e("[PUT REQUEST]", "Network exception", e);
   	  }
 	return 0;
+	}
+	
+	public int DeleteOffre(String id){
+		int status = 0;
+		URL url;
+		try {
+			url = new URL("http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/offre/"+id+".json");
+			HttpURLConnection httpCon;
+			httpCon = (HttpURLConnection) url.openConnection();
+			httpCon.setDoOutput(true);
+			httpCon.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			httpCon.setRequestMethod("DELETE");
+			httpCon.connect();
+			status = ((HttpURLConnection) httpCon).getResponseCode();
+		} 
+		catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		return status;
+		
 	}
 
 }
