@@ -18,6 +18,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
+import com.imie.rennes.imienetwork.AccueilEleveFragment;
+import com.imie.rennes.imienetwork.OffreFragment;
 import com.imie.rennes.mainActivity.MainActivity;
 
 import android.app.ProgressDialog;
@@ -51,6 +53,14 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 			case 2:
 				result = Login((String)params[1], (String)params[2], (String)params[3]);
 				break;
+			//Creation offre
+			case 3:
+				result = CreateOffre((Offre)params[0]);
+				break;
+			//Creation competence
+			case 4:
+				result = CreateCompetence((Competence)params[0]);
+				break;
 			default:
 				break;
 		}
@@ -68,6 +78,16 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 		//Login
 		if(param == 2  && result == 200){
 			Intent monIntent = new Intent(context, MainActivity.class);
+			context.startActivity(monIntent);
+		}
+		//Creation Offre
+		if((param == 3  && result == 200) || (param == 3 && result == 201)){
+			Intent monIntent = new Intent(context, OffreFragment.class);
+			context.startActivity(monIntent);
+		}
+		//Creation Competence
+		if((param == 4  && result == 200) || (param == 4 && result == 201)){
+			Intent monIntent = new Intent(context, AccueilEleveFragment.class);
 			context.startActivity(monIntent);
 		}
 		progDailog.dismiss();
@@ -148,6 +168,100 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	  	  }
 		return 0;
   	}
+	
+	public int CreateOffre(Offre offre){
+		try {
+	  		String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/offre/"+offre.getId()+".json";
+	  		  
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+ 
+            // 2. make POST request to the given URL
+            HttpPut httpPut = new HttpPut(url);
+ 
+            // 3. build jsonObject	                 
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", offre.getId());
+            jsonObject.put("titre", offre.getTitre());
+            jsonObject.put("description", offre.getDescription());
+            jsonObject.put("dateDebut", offre.getDateDebut());
+            jsonObject.put("detailsContact", offre.getDetailsContact());
+            jsonObject.put("departement", offre.getCompetences());
+            jsonObject.put("duree", offre.getDuree());
+            jsonObject.put("typePoste", offre.getTypePoste());
+            
+            
+            // 4. convert JSONObject to JSON to String
+            String json = jsonObject.toString();
+            Log.e("json", json);
+            
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	        nameValuePairs.add(new BasicNameValuePair("object", json)); 
+ 
+            // 5. set httpPost Entity
+            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+ 
+            // 6. Set some headers to inform server about the type of the content   
+            httpPut.setHeader("Content-type", "application/json");
+            
+            // 7. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPut);
+ 
+            // 8. receive response as inputStream
+            int value = (int)httpResponse.getStatusLine().getStatusCode();
+            Log.e("code", Integer.toString(value));
+            return value;
+            
+  		  
+  	  } catch (Exception e) {
+  	    Log.e("[PUT REQUEST]", "Network exception", e);
+  	  }
+	return 0;
+	}
+	
+	public int CreateCompetence(Competence competence){
+		try {
+	  		String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/competence/"+competence.getId()+".json";
+	  		  
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+ 
+            // 2. make POST request to the given URL
+            HttpPut httpPut = new HttpPut(url);
+ 
+            // 3. build jsonObject	                 
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", competence.getId());
+            jsonObject.put("libelle", competence.getLibelle());
+            
+            
+            // 4. convert JSONObject to JSON to String
+            String json = jsonObject.toString();
+            Log.e("json", json);
+            
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	        nameValuePairs.add(new BasicNameValuePair("object", json)); 
+ 
+            // 5. set httpPost Entity
+            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+ 
+            // 6. Set some headers to inform server about the type of the content   
+            httpPut.setHeader("Content-type", "application/json");
+            
+            // 7. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPut);
+ 
+            // 8. receive response as inputStream
+            int value = (int)httpResponse.getStatusLine().getStatusCode();
+            Log.e("code", Integer.toString(value));
+            return value;
+            
+  		  
+  	  } catch (Exception e) {
+  	    Log.e("[PUT REQUEST]", "Network exception", e);
+  	  }
+	return 0;
+	}
 	
 	public int Login(String url, String login, String mdp){
     	byte[] data = null;
