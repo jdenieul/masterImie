@@ -1,7 +1,6 @@
 package com.imie.rennes.classes;
 
 import java.io.InputStream;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -55,10 +54,10 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	@Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progDailog.setMessage("Loading...");
+        progDailog.setMessage("Chargement...");
         progDailog.setIndeterminate(false);
         progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progDailog.setCancelable(true);
+        progDailog.setCancelable(false);
         progDailog.show();
     }
 	
