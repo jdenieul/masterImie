@@ -2,6 +2,7 @@ package com.imie.rennes.mainActivity;
 
 import java.io.UnsupportedEncodingException;
 
+import network.ReseauUser;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.imie.rennes.classes.Reseau;
 import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.imienetwork.R;
 
@@ -92,13 +92,12 @@ public class LoginActivity extends ActionBarActivity {
     
     public boolean login(){
     	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
-    	Reseau r = new Reseau(this);
+    	ReseauUser r = new ReseauUser(this);
     	r.execute("2",url, nom.getText().toString(), mdp.getText().toString());        
     	return true;
     }    
     
     public boolean adduUser(){
-    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/7.json";
     	Utilisateur utilisateur = new Utilisateur();
         utilisateur.setId(7);
         utilisateur.setNom("DENIEUL");
@@ -110,8 +109,8 @@ public class LoginActivity extends ActionBarActivity {
         utilisateur.setEmail("j.denieul@gmail.com");
         utilisateur.setLangue("FR");
         utilisateur.setPassword("1234");
-    	Reseau r = new Reseau(this);
-    	r.execute("1",url, utilisateur);        	
+    	ReseauUser r = new ReseauUser(this);
+    	r.execute("1", utilisateur);        	
     	return true;
     }
     
