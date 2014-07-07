@@ -159,7 +159,7 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	    try {
 	        // Add your data
 	        httppost.setEntity(new StringEntity(login));
-	        httppost.setEntity(new StringEntity(base64.toString()));
+	        httppost.setEntity(new StringEntity(base64));
 
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
