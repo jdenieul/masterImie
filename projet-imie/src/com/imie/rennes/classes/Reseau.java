@@ -3,8 +3,10 @@ package com.imie.rennes.classes;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -13,6 +15,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import com.imie.rennes.mainActivity.MainActivity;
@@ -157,9 +160,12 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	    HttpPost httppost = new HttpPost(url);
 
 	    try {
+	    	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	        nameValuePairs.add(new BasicNameValuePair("login", login)); 
+	        nameValuePairs.add(new BasicNameValuePair("password", base64)); 
+
 	        // Add your data
-	        httppost.setEntity(new StringEntity(login));
-	        httppost.setEntity(new StringEntity(base64));
+	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
