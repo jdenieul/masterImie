@@ -22,7 +22,12 @@ import android.widget.Toast;
 public class Reseau extends AsyncTask<Object,Void,Integer>{
 	Context context;
 	Integer param;
-	ProgressDialog progDailog = new ProgressDialog(context);
+	ProgressDialog progDailog;
+	
+	public Reseau(Context context){
+		this.context = context;
+		this.progDailog = new ProgressDialog(context);
+	}
 
 
 	@Override
@@ -32,7 +37,6 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 		switch (param){
 			case 1:
 				result = CreateUser((String)params[1]);
-				context = (Context)params[2];
 				break;
 			default:
 				break;
@@ -43,11 +47,11 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	
 	@Override
 	protected void onPostExecute(Integer result) {
+		//En cas d'utilisateur creer ou mise à jour
 		if((param == 1  && result == 200) || (param == 1 && result == 201)){
 			Intent monIntent = new Intent(context, MainActivity.class);
 			context.startActivity(monIntent);
 		}
-		Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 		progDailog.dismiss();
 	}
 	
