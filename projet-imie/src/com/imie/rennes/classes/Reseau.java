@@ -9,15 +9,12 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
-
 import com.imie.rennes.mainActivity.MainActivity;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 public class Reseau extends AsyncTask<Object,Void,Integer>{
 	Context context;
@@ -36,7 +33,7 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 		param = Integer.parseInt((String)params[0]);
 		switch (param){
 			case 1:
-				result = CreateUser((String)params[1]);
+				result = CreateUser((String)params[1], (Utilisateur)params[2]);
 				break;
 			default:
 				break;
@@ -79,7 +76,7 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
   	}
 	
 	
-	public int CreateUser(String url) {
+	public int CreateUser(String url, Utilisateur utilisateur) {
 		
 	  	  try {
 	  		  
@@ -92,19 +89,7 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	 
 	            String json = "";
 	 
-	            // 3. build jsonObject
-	            Utilisateur utilisateur = new Utilisateur();
-	            utilisateur.setId(5);
-	            utilisateur.setNom("DENIEUL");
-	            utilisateur.setPrenom("Jeremy");
-	            utilisateur.setAdresse("48 rue Jean-Francois Millet");
-	            utilisateur.setTelephone("06060606");
-	            utilisateur.setStatus(1);
-	            utilisateur.setLogin("j.denieul@gmail.com");
-	            utilisateur.setEmail("j.denieul@gmail.com");
-	            utilisateur.setLangue("FR");
-	            utilisateur.setPassword("1234");
-	                 
+	            // 3. build jsonObject	                 
 	            JSONObject jsonObject = new JSONObject();
 	            jsonObject.put("id", utilisateur.getId());
 	            jsonObject.put("nom", utilisateur.getNom());

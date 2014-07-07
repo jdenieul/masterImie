@@ -92,9 +92,19 @@ public class LoginActivity extends ActionBarActivity {
     
     public boolean adduUser(){
     	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/5.json";
+    	Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(5);
+        utilisateur.setNom("DENIEUL");
+        utilisateur.setPrenom("Jeremy");
+        utilisateur.setAdresse("48 rue Jean-Francois Millet");
+        utilisateur.setTelephone("06060606");
+        utilisateur.setStatus(1);
+        utilisateur.setLogin("j.denieul@gmail.com");
+        utilisateur.setEmail("j.denieul@gmail.com");
+        utilisateur.setLangue("FR");
+        utilisateur.setPassword("1234");
     	Reseau r = new Reseau(this);
-    	r.execute("1",url);
-    	//Reseau.putInputStreamUrl(url);        	
+    	r.execute("1",url, utilisateur);        	
     	return true;
     }
     
