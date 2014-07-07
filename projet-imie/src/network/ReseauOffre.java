@@ -43,6 +43,7 @@ public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
 			case 1:
 				result = CreateOffre((Offre)params[1]);
 				break;
+			//Suppression Offre
 			case 3:
 				result = DeleteOffre((String)params[1]);
 				break;
@@ -60,6 +61,7 @@ public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
 			Intent monIntent = new Intent(context, OffreFragment.class);
 			context.startActivity(monIntent);
 		}
+		//Suppression Offre
 		if((param == 3  && result == 200) || (param == 3 && result == 201)){
 			Intent monIntent = new Intent(context, OffreFragment.class);
 			context.startActivity(monIntent);
