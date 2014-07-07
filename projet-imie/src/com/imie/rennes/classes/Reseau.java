@@ -1,6 +1,7 @@
 package com.imie.rennes.classes;
 
 import java.io.InputStream;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -8,12 +9,15 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+
 import com.imie.rennes.mainActivity.MainActivity;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Reseau extends AsyncTask<Object,Void,Integer>{
 	Context context;
@@ -43,6 +47,7 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 			Intent monIntent = new Intent(context, MainActivity.class);
 			context.startActivity(monIntent);
 		}
+		Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 		progDailog.dismiss();
 	}
 	
