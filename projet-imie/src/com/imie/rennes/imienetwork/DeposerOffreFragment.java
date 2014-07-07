@@ -1,7 +1,16 @@
 package com.imie.rennes.imienetwork;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
+import network.ReseauOffre;
+import network.ReseauUser;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import com.imie.rennes.classes.Offre;
 import com.imie.rennes.mainActivity.MainActivity;
 
 import android.os.Bundle;
@@ -15,12 +24,14 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 public class DeposerOffreFragment extends Fragment {
 	
 	Button buttonEnvoyer;
 	Button buttonAnnuler;
-	EditText datepicker;
+	EditText datepicker, editTexttitre, datepickerdatedebut, edittextduree, edittextdetailcontact, edittextemailcontact, edittextdescription;
+	Spinner spinnertypedecontrat;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +39,13 @@ public class DeposerOffreFragment extends Fragment {
 		
 		buttonEnvoyer = (Button)frag.findViewById(R.id.buttonEnvoyer);
 		datepicker = (EditText)frag.findViewById(R.id.datepickerdatedebut);
+		editTexttitre = (EditText)frag.findViewById(R.id.editTexttitre);
+		datepickerdatedebut = (EditText)frag.findViewById(R.id.datepickerdatedebut);
+		edittextduree = (EditText)frag.findViewById(R.id.edittextduree);
+		edittextdetailcontact = (EditText)frag.findViewById(R.id.edittextdetailcontact);
+		edittextemailcontact = (EditText)frag.findViewById(R.id.edittextemailcontact);
+		edittextdescription = (EditText)frag.findViewById(R.id.edittextdescription);
+		spinnertypedecontrat = (Spinner)frag.findViewById(R.id.spinnertypedecontrat);
 		
 		datepicker.setOnClickListener(new OnClickListener() {
 
@@ -53,12 +71,27 @@ public class DeposerOffreFragment extends Fragment {
 		
 		buttonEnvoyer.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
-				Fragment fragment = new OffreFragment();
-				((MainActivity) getActivity()).changeFragment(fragment);
+				CreationOffre();
 			}
 		});
 				
 		return frag;
+	}
+	
+	public void CreationOffre(){
+		Offre offre = new Offre();
+		offre.setId(1);
+		offre.setTitre(editTexttitre.getText().toString());
+		offre.setDescription(edittextdescription.getText().toString());
+		offre.setDetailsContact(edittextdetailcontact.getText().toString());
+		offre.setDuree(Integer.parseInt(edittextduree.getText().toString()));
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy").withOffsetParsed();
+		DateTime dateTime = formatter.parseDateTime(datepickerdatedebut.getText().toString());
+		GregorianCalendar cal = dateTime.toGregorianCalendar();
+		offre.setDateDebut(cal);
+		offre.setTypePoste(spinnertypedecontrat.getSelectedItem().toString());
+		ReseauOffre r = new ReseauOffre(getActivity());
+    	r.execute("1", offre);
 	}
 
 	
