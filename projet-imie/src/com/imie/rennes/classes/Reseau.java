@@ -1,38 +1,24 @@
 package com.imie.rennes.classes;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.imie.rennes.mainActivity.LoginActivity;
 import com.imie.rennes.mainActivity.MainActivity;
-
-import android.R.bool;
-import android.R.string;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Switch;
 
 public class Reseau extends AsyncTask<Object,Void,Integer>{
 	Context context;
 	Integer param;
+	ProgressDialog progDailog = new ProgressDialog(context);
 
 
 	@Override
@@ -52,12 +38,23 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	}
 	
 	@Override
-	   protected void onPostExecute(Integer result) {
-			if((param == 1  && result == 200) || (param == 1 && result == 201)){
-				Intent monIntent = new Intent(context, MainActivity.class);
-				context.startActivity(monIntent);
-			}
-	   }
+	protected void onPostExecute(Integer result) {
+		if((param == 1  && result == 200) || (param == 1 && result == 201)){
+			Intent monIntent = new Intent(context, MainActivity.class);
+			context.startActivity(monIntent);
+		}
+		progDailog.dismiss();
+	}
+	
+	@Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progDailog.setMessage("Loading...");
+        progDailog.setIndeterminate(false);
+        progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progDailog.setCancelable(true);
+        progDailog.show();
+    }
 	
 
 	public static InputStream getInputStreamFromUrl(Object url) {
@@ -75,7 +72,6 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	
 	public int CreateUser(String url) {
 		
-	  	  InputStream content = null;
 	  	  try {
 	  		  
 	  		  
@@ -129,7 +125,6 @@ public class Reseau extends AsyncTask<Object,Void,Integer>{
 	            // 8. receive response as inputStream
 	            int value = (int)httpResponse.getStatusLine().getStatusCode();
 	            Log.e("code", Integer.toString(value));
-	            content = httpResponse.getEntity().getContent();
 	            return value;
 	            
 	  		  
