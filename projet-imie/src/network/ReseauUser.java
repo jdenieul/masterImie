@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -12,12 +13,18 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.mainActivity.MainActivity;
+
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
@@ -27,6 +34,8 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	Context context;
 	Integer param;
 	ProgressDialog progDailog;
+	private SharedPreferences preferences;
+	private SharedPreferences.Editor editor;
 	
 	public ReseauUser(Context context){
 		this.context = context;
@@ -55,7 +64,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	
 	@Override
 	protected void onPostExecute(Integer result) {
-		//En cas d'utilisateur creer ou mise � jour
+		//En cas d'utilisateur creer ou mise � jour
 		if((param == 1  && result == 200) || (param == 1 && result == 201)){
 			Intent monIntent = new Intent(context, MainActivity.class);
 			context.startActivity(monIntent);
@@ -116,7 +125,9 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	            
 	            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 		        nameValuePairs.add(new BasicNameValuePair("object", json)); 
-	 
+		        String token = "c8cce43de370cf5bcd6b5a86f3acc71a7366c9afde842ea8d441a1828ad6b88a";
+		        nameValuePairs.add(new BasicNameValuePair("token", token)); 
+		        
 	            // 5. set httpPost Entity
 	            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	 
@@ -128,6 +139,8 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	 
 	            // 8. receive response as inputStream
 	            int value = (int)httpResponse.getStatusLine().getStatusCode();
+	            
+	            
 	            Log.e("code", Integer.toString(value));
 	            return value;
 	            
@@ -146,6 +159,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
         } catch (UnsupportedEncodingException e1) {
         e1.printStackTrace();
         }
+    	
     	String base64 = Base64.encodeToString(data, Base64.DEFAULT);
 		// Create a new HttpClient and Post Header
 	    HttpClient httpclient = new DefaultHttpClient();
@@ -162,6 +176,9 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
 	        int value = (int)response.getStatusLine().getStatusCode();
+	        // Récupère le token renvoyé par l'api
+	        JSONObject jsonToken = new JSONObject(EntityUtils.toString(response.getEntity()));	        	 
+	        addTokenToPref(jsonToken);
 	        Log.e("code", Integer.toString(value));
 	        return value;
 	        
@@ -169,8 +186,24 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	        // TODO Auto-generated catch block
 	    } catch (IOException e) {
 	        // TODO Auto-generated catch block
-	    }
+	    } catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    return 0;
+	}
+	
+	private void addTokenToPref(JSONObject json){
+    	
+    	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		this.editor = preferences.edit();
+		try {
+			editor.putString("TOKEN_USER", json.getString("token"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		editor.commit();		
 	}
 
 }

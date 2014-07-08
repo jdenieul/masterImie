@@ -77,6 +77,9 @@ public class MainActivity extends ActionBarActivity {
 		utilisateurCourant = new Utilisateur(this);
 		String userString = preferences.getString("CURRENT_USER", "");
 		
+		// Récupération du token
+		String tokenString = preferences.getString("TOKEN_USER", "");
+		
 		// S'il y a un utilisateur en cache
 		if (userString != "") {
 			try {

@@ -27,6 +27,8 @@ public class LoginActivity extends ActionBarActivity {
 	Button boutonConnexion;
 	EditText nom, mdp;
 	private static long backPressed;
+	private SharedPreferences preferences;
+	private SharedPreferences.Editor editor;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,25 +83,29 @@ public class LoginActivity extends ActionBarActivity {
     	
     	Utilisateur utilisateur = new Utilisateur(this);    	
     	
-    	// Stock l'utilisateur dans le cache
-		SharedPreferences preferences = LoginActivity.this.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor = preferences.edit();
-		editor.putString("CURRENT_USER", utilisateur.getSerializableString());
-		editor.commit();
-		//adduUser();
+    			
 		login();
+		//adduUser();
     }
     
+    /**
+     * Connexion
+     * @return
+     */
     public boolean login(){
+    	
     	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
-    	ReseauUser r = new ReseauUser(this);
-    	r.execute("2",url, nom.getText().toString(), mdp.getText().toString());        
+    	ReseauUser r = new ReseauUser(this);    	
+    	r.execute("2",url, nom.getText().toString(), mdp.getText().toString());   
+    	
+
     	return true;
     }    
     
     public boolean adduUser(){
+    	
     	Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(7);
+        utilisateur.setId(8);
         utilisateur.setNom("DENIEUL");
         utilisateur.setPrenom("Jeremy");
         utilisateur.setAdresse("48 rue Jean-Francois Millet");
