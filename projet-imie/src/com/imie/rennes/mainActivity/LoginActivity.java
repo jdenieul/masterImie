@@ -86,8 +86,8 @@ public class LoginActivity extends ActionBarActivity {
     public void validConnexion(){
     	
     	Utilisateur utilisateur = new Utilisateur(this);    	    	
-    	createExperience();	
-		//login();
+		login();
+    	//createExperience();		
 		//adduUser();
     }
     
@@ -105,25 +105,13 @@ public class LoginActivity extends ActionBarActivity {
     	return true;
     }   
     
-    public boolean createExperience(){
-    	
-    	Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setId(8);
-        utilisateur.setNom("DENIEUL");
-        utilisateur.setPrenom("Jeremy");
-        utilisateur.setAdresse("48 rue Jean-Francois Millet");
-        utilisateur.setTelephone("06060606");
-        utilisateur.setStatus(1);
-        utilisateur.setLogin("j.denieul@gmail.com");
-        utilisateur.setEmail("j.denieul@gmail.com");
-        utilisateur.setLangue("FR");
-        utilisateur.setPassword("1234");
+    public boolean createExperience(){    	
         
         Experience experience = new Experience();
         experience.setId(2);
         experience.setLibelle("Libelle test");
         experience.setDescription("Description test");
-        experience.setUtilisateurCreateur(utilisateur);
+        experience.setUtilisateurCreateur(null);
         experience.setDateDebut(new GregorianCalendar(2014,07,23));
         experience.setDateFin(new GregorianCalendar(2014,07,23));
         

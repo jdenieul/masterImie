@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.mainActivity.MainActivity;
 
+import android.R.string;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -177,11 +178,18 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	        // Execute HTTP Post Request
 	        HttpResponse response = httpclient.execute(httppost);
 	        int value = (int)response.getStatusLine().getStatusCode();
-	        // Récupère le token renvoyé par l'api
-	        JSONObject jsonPref = new JSONObject(EntityUtils.toString(response.getEntity()));	        	 
-	        addTokenToPref(jsonPref);
-	        addUserToPref(jsonPref);
-	        Log.e("code", Integer.toString(value));
+	        
+	        // Si le code = 200 alors tout est OK
+	        if (verifCode(value).equals(200)){
+	        	
+		        // Récupère le token renvoyé par l'api
+		        JSONObject jsonPref = new JSONObject(EntityUtils.toString(response.getEntity()));	        	 
+		        addTokenToPref(jsonPref);
+		        addUserToPref(jsonPref);
+		        Log.e("code", Integer.toString(value));
+		        
+	        }
+
 	        return value;
 	        
 	    } catch (ClientProtocolException e) {
@@ -213,6 +221,8 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
     	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		this.editor = preferences.edit();
 		try {
+			String strJson = json.getString("utilisateur");
+			
 			editor.putString("CURRENT_USER", json.getString("utilisateur"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -220,6 +230,35 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		}
 		editor.commit();		
 	}	
+	
+	/*
+	 * Retourne le message selon le code de retour
+	 */
+	private String verifCode(int valueRetour){
+		
+		String messageRetour = "";
+		
+		switch (valueRetour) {
+		
+		case 200:
+			messageRetour = "Connexion effectuée.";
+			break;		
+		
+		case 204:
+			messageRetour = "Le login ou le mot de passe est incorrect.";
+			break;
+			
+		case 226:
+			messageRetour = "Le login ou le mot de passe est manquant.";
+			break;			
+
+		default:			
+			break;
+		}
+		
+		return messageRetour;
+		
+	}
 	
 	
 
