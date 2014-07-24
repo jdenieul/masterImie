@@ -56,6 +56,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 			case 2:
 				result = Login((String)params[1], (String)params[2], (String)params[3]);
 				break;
+				
 			default:
 				break;
 		}
@@ -177,8 +178,9 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	        HttpResponse response = httpclient.execute(httppost);
 	        int value = (int)response.getStatusLine().getStatusCode();
 	        // Récupère le token renvoyé par l'api
-	        JSONObject jsonToken = new JSONObject(EntityUtils.toString(response.getEntity()));	        	 
-	        addTokenToPref(jsonToken);
+	        JSONObject jsonPref = new JSONObject(EntityUtils.toString(response.getEntity()));	        	 
+	        addTokenToPref(jsonPref);
+	        addUserToPref(jsonPref);
 	        Log.e("code", Integer.toString(value));
 	        return value;
 	        
@@ -205,5 +207,20 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		}
 		editor.commit();		
 	}
+	
+	private void addUserToPref(JSONObject json){
+    	
+    	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		this.editor = preferences.edit();
+		try {
+			editor.putString("CURRENT_USER", json.getString("utilisateur"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		editor.commit();		
+	}	
+	
+	
 
 }

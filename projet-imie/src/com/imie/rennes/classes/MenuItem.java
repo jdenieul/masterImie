@@ -287,4 +287,85 @@ public class MenuItem {
 		}
 	}
 	
+	
+	public void genererMenu(ArrayList<MenuItem> items,ArrayList<Integer> tabImages,ArrayList<Groupe> groupes){
+		
+		if (groupes.contains("ACCUE")){
+			
+			if (this.itemHome == null){
+				itemHome = new MenuItem(new MenuFragment(),
+						this.context.getResources().getString(R.string.text_accueil), R.drawable.ic_drawer);
+				items.add(itemHome);
+				tabImages.add(R.drawable.accueil);			
+			}	
+		}
+		
+		if (groupes.contains("MESSA")){
+		
+			if (this.itemMessagerie == null){
+				itemMessagerie = new MenuItem(new MenuFragment(),
+						this.context.getResources().getString(R.string.text_messagerie), R.drawable.ic_drawer);
+				items.add(itemMessagerie);	
+				tabImages.add(R.drawable.messagerie);
+			}
+			
+		}
+		
+		if (groupes.contains("NEWS")){
+			
+		}
+		
+		if (groupes.contains("EVENT")){
+			
+			if (this.itemEvenements == null){
+				itemEvenements = new MenuItem(new MenuFragment(),
+						this.context.getResources().getString(R.string.menu_evenement), R.drawable.ic_drawer);
+				items.add(itemEvenements);	
+				tabImages.add(R.drawable.evenement);
+			}
+			
+		}
+		
+		if (groupes.contains("OFFRE")){
+			
+			if (this.itemOffre == null){
+				itemOffre = new MenuItem(new MenuFragment(),
+						this.context.getResources().getString(R.string.text_offre), R.drawable.ic_drawer);
+				items.add(itemOffre);
+				tabImages.add(R.drawable.offre);
+			}
+			
+		}
+		
+		if (groupes.contains("CPTE")){
+			
+			if (this.itemMajMdp == null){
+				itemMajMdp = new MenuItem(new MenuFragment(),
+						this.context.getResources().getString(R.string.text_gerer_mon_compte), R.drawable.ic_drawer);
+				items.add(itemMajMdp);			
+				tabImages.add(R.drawable.gererprofilutilisateur);
+			}
+			
+		}		
+		
+		if (groupes.contains("SEARCH")){
+			
+			if (this.itemRecherche == null){
+				itemRecherche = new MenuItem(new MenuFragment(),
+						this.context.getResources().getString(R.string.text_rechercher), R.drawable.ic_drawer);
+				items.add(itemRecherche);
+				tabImages.add(R.drawable.recherche);
+			}
+		}
+		
+		if (groupes.contains("EMB")){
+			
+		}
+		
+		if (groupes.contains("GESCV")){
+			
+		}
+		
+	}
+	
 }

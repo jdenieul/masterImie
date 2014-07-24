@@ -1,7 +1,9 @@
 package com.imie.rennes.mainActivity;
 
 import java.io.UnsupportedEncodingException;
+import java.util.GregorianCalendar;
 
+import network.ReseauExperience;
 import network.ReseauUser;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.imie.rennes.classes.Experience;
 import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.imienetwork.R;
 
@@ -32,6 +35,7 @@ public class LoginActivity extends ActionBarActivity {
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	
         super.onCreate(savedInstanceState);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -81,10 +85,9 @@ public class LoginActivity extends ActionBarActivity {
     
     public void validConnexion(){
     	
-    	Utilisateur utilisateur = new Utilisateur(this);    	
-    	
-    			
-		login();
+    	Utilisateur utilisateur = new Utilisateur(this);    	    	
+    	createExperience();	
+		//login();
 		//adduUser();
     }
     
@@ -100,7 +103,35 @@ public class LoginActivity extends ActionBarActivity {
     	
 
     	return true;
-    }    
+    }   
+    
+    public boolean createExperience(){
+    	
+    	Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setId(8);
+        utilisateur.setNom("DENIEUL");
+        utilisateur.setPrenom("Jeremy");
+        utilisateur.setAdresse("48 rue Jean-Francois Millet");
+        utilisateur.setTelephone("06060606");
+        utilisateur.setStatus(1);
+        utilisateur.setLogin("j.denieul@gmail.com");
+        utilisateur.setEmail("j.denieul@gmail.com");
+        utilisateur.setLangue("FR");
+        utilisateur.setPassword("1234");
+        
+        Experience experience = new Experience();
+        experience.setId(2);
+        experience.setLibelle("Libelle test");
+        experience.setDescription("Description test");
+        experience.setUtilisateurCreateur(utilisateur);
+        experience.setDateDebut(new GregorianCalendar(2014,07,23));
+        experience.setDateFin(new GregorianCalendar(2014,07,23));
+        
+    	ReseauExperience r = new ReseauExperience(this);
+    	r.execute("1", experience);   
+    	
+    	return true;
+    }
     
     public boolean adduUser(){
     	

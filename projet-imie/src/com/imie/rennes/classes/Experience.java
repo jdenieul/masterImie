@@ -9,24 +9,29 @@ public class Experience {
 	private String description;
 	private GregorianCalendar dateDebut;
 	private GregorianCalendar dateFin;
+	private Utilisateur	utilisateurCreateur;
 	
 	/**
+	 * 
 	 * @param id
 	 * @param libelle
 	 * @param description
 	 * @param dateDebut
 	 * @param dateFin
+	 * @param utilisateurCreateur
 	 */
 	public Experience(int id, String libelle, String description,
-			GregorianCalendar dateDebut, GregorianCalendar dateFin) {
+			GregorianCalendar dateDebut, GregorianCalendar dateFin,
+			Utilisateur utilisateurCreateur) {
 		super();
 		this.id = id;
 		this.libelle = libelle;
 		this.description = description;
 		this.dateDebut = dateDebut;
 		this.dateFin = dateFin;
+		this.utilisateurCreateur = utilisateurCreateur;
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -95,5 +100,13 @@ public class Experience {
 	public void setDateFin(GregorianCalendar dateFin) {
 		this.dateFin = dateFin;
 	}
+	
+	public Utilisateur getUtilisateurCreateur() {
+		return utilisateurCreateur;
+	}
+
+	public void setUtilisateurCreateur(Utilisateur utilisateurCreateur) {
+		this.utilisateurCreateur = utilisateurCreateur;
+	}	
 		
 }
