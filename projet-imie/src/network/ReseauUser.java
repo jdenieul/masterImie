@@ -17,6 +17,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
 import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.mainActivity.MainActivity;
 
@@ -180,12 +182,12 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	        int value = (int)response.getStatusLine().getStatusCode();
 	        
 	        // Si le code = 200 alors tout est OK
-	        if (verifCode(value).equals(200)){
+	        if (value == 200){
 	        	
 		        // Récupère le token renvoyé par l'api
 		        JSONObject jsonPref = new JSONObject(EntityUtils.toString(response.getEntity()));	        	 
 		        addTokenToPref(jsonPref);
-		        addUserToPref(jsonPref);
+		        createUserFromJson(jsonPref);
 		        Log.e("code", Integer.toString(value));
 		        
 	        }
@@ -221,7 +223,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
     	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		this.editor = preferences.edit();
 		try {
-			String strJson = json.getString("utilisateur");
+			
 			
 			editor.putString("CURRENT_USER", json.getString("utilisateur"));
 		} catch (JSONException e) {
@@ -258,6 +260,25 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		
 		return messageRetour;
 		
+	}
+	
+	private Utilisateur createUserFromJson(JSONObject json){
+		
+		Utilisateur currentUser = new Utilisateur();
+		
+		try {
+			Gson gson = new Gson();
+			currentUser = gson.fromJson(json.getString("utilisateur"), Utilisateur.class);
+			editor.putString("CURRENT_USER", json.getString("utilisateur"));
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return currentUser;		
+
 	}
 	
 	
