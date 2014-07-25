@@ -3,6 +3,8 @@ package network;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
@@ -172,7 +174,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	    try {
 	    	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	        nameValuePairs.add(new BasicNameValuePair("login", login)); 
-	        nameValuePairs.add(new BasicNameValuePair("password", base64)); 
+	        nameValuePairs.add(new BasicNameValuePair("password", base64.substring(0,base64.length()-1))); 
 
 	        // Add your data
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));

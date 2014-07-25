@@ -50,7 +50,6 @@ public class LoginActivity extends ActionBarActivity {
         getSupportActionBar().setBackgroundDrawable(background);
         getSupportActionBar().setTitle(R.string.titre_login);
         
-
         boutonConnexion = (Button) this.findViewById(R.id.buttonConnexion);
 		nom = (EditText) this.findViewById(R.id.editTextLogin);
 		mdp = (EditText) this.findViewById(R.id.editTextMdp);

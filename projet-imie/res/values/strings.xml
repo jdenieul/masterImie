@@ -145,6 +145,8 @@
     <!-- Texte toast -->
     <string name="text_toast_accepte_evenement">Votre participation à l\'évènement à été prise en compte</string>
     <string name="text_toast_decline_evenement">Vous avez décliner l\'invitation à l\'évènement</string>
+    <string name="text_toast_blank_password">Veuillez remplir les champs</string>
+    <string name="text_toast_different_password">Les mots de passe ne correspondent pas</string>
     
     <string-array name="array_names">
 	    <item>Contrat en alternance</item>
