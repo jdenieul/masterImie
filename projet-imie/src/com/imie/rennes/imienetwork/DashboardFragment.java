@@ -10,6 +10,8 @@ import com.imie.rennes.classes.ItemRow;
 import com.imie.rennes.mainActivity.MainActivity;
 import com.jensdriller.libs.undobar.UndoBar;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DashboardFragment extends Fragment{
 
@@ -27,6 +30,8 @@ public class DashboardFragment extends Fragment{
 	Button buttonMessages;
 	Button buttonProfil;
 	TextView nombreMessage;
+	
+	SharedPreferences preferences;
 	
 	//SwypeListView
 	static SwipeListView listViewEvenements;
@@ -43,8 +48,11 @@ public class DashboardFragment extends Fragment{
 		listViewEvenements = (SwipeListView)frag.findViewById(R.id.listViewEvenement);
 		nombreMessage = (TextView)frag.findViewById(R.id.tvNombreMessages);
 		
+		//Récupération préférences
+		this.preferences = this.getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		
 		/**
-		 * Gestion Ã©vnÃ©ments
+		 * Gestion Evenements
 		 */
 		buttonMessages.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
@@ -67,7 +75,7 @@ public class DashboardFragment extends Fragment{
 			}
 		});
 		/**
-		 * Fin gestion Ã©vÃ©nmenent
+		 * Fin gestion Evenement
 		 */
 		
 		/**
@@ -76,11 +84,18 @@ public class DashboardFragment extends Fragment{
 		 * Si < 0 : modification padding pour garder cercle( 15 left, right, 5 top, bottom)
 		 * si < 0 : padding normal
 		 */
-		//TODO R2cupÃ©ration nb message en bdd
-		int nbMessage = 7;
+		int nbMessage;
+		if(this.preferences.contains("UNREAD_MSG")){
+			nbMessage = this.preferences.getInt("UNREAD_MSG", 0);
+		}else{
+			Toast.makeText(getActivity(), R.string.text_toast_pb_unread_msg,Toast.LENGTH_SHORT).show();
+			nbMessage = 0;
+		}
 		
+		//SEt nb message
 		nombreMessage.setText(String.valueOf(nbMessage));
 		
+		//Vérif nombre message pour gestion padding
 		if(nbMessage == 0){
 			nombreMessage.setVisibility(View.GONE);
 		}else if (nbMessage < 10){
@@ -145,7 +160,7 @@ public class DashboardFragment extends Fragment{
 	
 		listViewEvenements.setAdapter(adapter);
         
-        //TODO RÃ©cupÃ©ration event bdd
+        //TODO Récupération event bdd
         for(int i=0;i<3;i++)
         {
         	itemData.add(new ItemRow(getString(R.string.text_exemple_descri_event)+i, 

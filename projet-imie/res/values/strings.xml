@@ -147,9 +147,33 @@
     <string name="text_toast_decline_evenement">Vous avez décliner l\'invitation à l\'évènement</string>
     <string name="text_toast_blank_password">Veuillez remplir les champs</string>
     <string name="text_toast_different_password">Les mots de passe ne correspondent pas</string>
+    <string name="text_toast_wrong_oldpwd">L\'ancien mot de passe ne correspond pas</string>
+    <string name="text_toast_wrong_login_mdp">Mauvais login ou mot de passe</string>
+    <string name="text_toast_edit_mdp">Mot de passe modifié</string>
+    <string name="text_toast_pb_connexion">Un problème est survenu, veuillez vous reconnecter</string>
+    <string name="text_toast_loading">Chargement&#8230;</string>
+    <string name="text_toast_pb_unread_msg">Impossible de récupérer le nombre de message non lu</string>
+    
     
     <!-- URL -->
     <string name="url_base_api">http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/</string>
+    <string name="url_utilisateur">utilisateur/</string>
+    <string name="url_pwd_update">/password-update.json</string>
+    <!-- FIN URL -->
+    
+    <!-- PARAMETRES -->
+    
+    <!-- Généraux -->
+    <string name="gen_id_user">utlisateur_id</string>
+    <string name="gen_token">token</string>
+    
+    <!-- Edition password -->
+    <string name="edit_pwd_old_pwd">old_password</string>
+    <string name="edit_pwd_new_pwd">new_password</string>
+        
+    <!-- FIN STRING PARAMETRES -->
+    
+    
     
     <string-array name="array_names">
 	    <item>Contrat en alternance</item>

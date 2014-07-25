@@ -28,9 +28,10 @@ public class UpdatePasswordFragment extends Fragment {
 	
 	private SharedPreferences preferences;
 	Utilisateur currentUser;
+	String token;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View frag = inflater.inflate(R.layout.fragment_updatelogin,container, false);
+		View frag = inflater.inflate(R.layout.fragment_update_mdp,container, false);
 		
 		newMDP = (EditText)frag.findViewById(R.id.editTextNewMdp);
 		newAgainMDP = (EditText)frag.findViewById(R.id.editTextNewAgainMdp);
@@ -45,12 +46,15 @@ public class UpdatePasswordFragment extends Fragment {
 		//recup user
 		currentUser = new Utilisateur();
 		Gson gson = new Gson();
-		if(preferences.contains("CURRENT_USER")){
+		if(this.preferences.contains("CURRENT_USER")){
 			String jsonCurrentUser = preferences.getString("CURRENT_USER", "");
 			currentUser = gson.fromJson(jsonCurrentUser, Utilisateur.class);
 		}else{
 			//TODO retour login ?
 		}
+		
+		//Récupération du token
+		token = this.preferences.getString("TOKEN_USER", "");
 		
 		buttonEnvoyer.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
@@ -59,20 +63,21 @@ public class UpdatePasswordFragment extends Fragment {
 				String newPwdString = String.valueOf(newMDP.getText());
 				String secondNewMdp = String.valueOf(newAgainMDP.getText());
 				
-				//Verif champs non vides
-				if(!newPwdString.equals("")){
-					//Vérif concordance des 2 mots de passe
-					if (newPwdString.equals(secondNewMdp)) {
-						
-						//Envoi webservice pour verif et modification
-						validNewPassword(oldPwdString, newPwdString);
-						
-						//Retour accueil
-						Fragment fragment = new DashboardFragment();
-						((MainActivity) getActivity()).changeFragment(fragment);
-						
+				//Verif remplissage ancien mot de passe
+				if(!oldPwdString.equals("")){
+					
+					//Verif champs non vides
+					if(!newPwdString.equals("")){
+						//Vérif concordance des 2 mots de passe
+						if (newPwdString.equals(secondNewMdp)) {
+							
+							//Envoi webservice pour verif et modification
+							validNewPassword(oldPwdString, newPwdString);
+						}else{
+							Toast.makeText(getActivity(), R.string.text_toast_different_password,Toast.LENGTH_SHORT).show();
+						}
 					}else{
-						Toast.makeText(getActivity(), R.string.text_toast_different_password,Toast.LENGTH_SHORT).show();
+						Toast.makeText(getActivity(), R.string.text_toast_blank_password,Toast.LENGTH_SHORT).show();
 					}
 				}else{
 					Toast.makeText(getActivity(), R.string.text_toast_blank_password,Toast.LENGTH_SHORT).show();
@@ -98,16 +103,16 @@ public class UpdatePasswordFragment extends Fragment {
 	}
 	
 	/**
-	 * Récupération des passwords et envoi modifications REseauUser qui gère enbackground
+	 * Récupération des passwords et envoi modifications REseauUser qui gère en background
 	 * @param oldPwd
 	 * @param newPwd
 	 * @return
 	 */
 	 public boolean validNewPassword(String oldPwd, String newPwd){
 	    	
-    	String url = getString(R.string.url_base_api);
+    	String url = getString(R.string.url_base_api)+getString(R.string.url_utilisateur)+this.currentUser.getId()+getString(R.string.url_pwd_update);
     	ReseauUser r = new ReseauUser(this.getActivity());    	
-    	r.execute("3",url, nom.getText().toString(), mdp.getText().toString());   
+    	r.execute("3",url, oldPwd, newPwd, Integer.toString(this.currentUser.getId()), this.token);   
     	
     	return true;
 	}   
