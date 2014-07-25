@@ -20,6 +20,7 @@ import com.imie.rennes.imienetwork.OffreFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -27,6 +28,7 @@ public class ReseauOffre extends AsyncTask<Object,Void,Integer>{
 	Context context;
 	Integer param;
 	ProgressDialog progDailog;
+	SharedPreferences preferences;
 	
 	public ReseauOffre(Context context){
 		this.context = context;

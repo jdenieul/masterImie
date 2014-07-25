@@ -3,16 +3,22 @@ package com.imie.rennes.imienetwork;
 import java.util.ArrayList;
 import java.util.List;
 
+import network.ReseauCompetence;
+
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.imie.rennes.adapteur.ItemAdapterCompetence;
 import com.imie.rennes.adapteur.ItemAdapterExperience;
 import com.imie.rennes.adapteur.ItemAdapterOffre;
+import com.imie.rennes.classes.Competence;
 import com.imie.rennes.classes.ExperienceRow;
 import com.imie.rennes.classes.ItemRow;
 import com.imie.rennes.mainActivity.MainActivity;
 import com.jensdriller.libs.undobar.UndoBar;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -21,21 +27,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 
 public class ProfilFragment extends Fragment {
 	
 	Button btnVoirCV;
+	ImageButton btnAjoutCompetence;
 	static SwipeListView listViewCompetence;
 	static SwipeListView listViewExperience;
 	List<ExperienceRow> itemExperience;
 	List<ItemRow> itemCompetence;
 	ItemAdapterCompetence competenceAdapter;
 	ItemAdapterExperience experienceAdapter;
+	private Spinner spinnerCompetences;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View frag = inflater.inflate(R.layout.fragment_profil,container, false);
 		
 		btnVoirCV = (Button)frag.findViewById(R.id.btnVoirCV);
+		btnAjoutCompetence = (ImageButton)frag.findViewById(R.id.ajouterCompetence); 
 		listViewCompetence = (SwipeListView)frag.findViewById(R.id.lvCompetences);
 		listViewExperience = (SwipeListView)frag.findViewById(R.id.lvExperiences);
 		
@@ -61,6 +72,7 @@ public class ProfilFragment extends Fragment {
 		competenceAdapter = new ItemAdapterCompetence(getActivity(),R.layout.custom_row,itemCompetence);
 		
 		listViewCompetence.setSwipeListViewListener(new BaseSwipeListViewListener() {
+			
             public void onOpened(int position, boolean toRight) {
             }
 
@@ -195,6 +207,13 @@ public class ProfilFragment extends Fragment {
         
         experienceAdapter.notifyDataSetChanged();
         
+        // Action lors du clique sur le bouton "+" d'ajout de compétences
+        btnAjoutCompetence.setOnClickListener(new Button.OnClickListener(){
+			public void onClick(View v){
+				dialogueAjoutCompetence();
+			}
+		});
+        
 		return frag;
 	}
 	
@@ -215,5 +234,53 @@ public class ProfilFragment extends Fragment {
 	    float px = dp * (metrics.densityDpi / 160f);
 	    return (int) px;
 	}
+	
+	public void dialogueAjoutCompetence(){
+		
+		Drawable background = getResources().getDrawable(R.drawable.background_popup);
+		
+		//Creation nouvelle alerte dialogue
+    	AlertDialog.Builder dialogueComp = new AlertDialog.Builder(getActivity());
+    	View v = this.getActivity().getLayoutInflater().inflate(R.layout.fragment_ajout_competence_eleve, null); 
+    	dialogueComp.setCancelable(true);
+        // Modification du spinner
+        spinnerCompetences = (Spinner)v.findViewById(R.id.spinnerListeCompetences);
+		// Appel des compétences
+		recupCompetences();
+		
+    	dialogueComp.setTitle(R.string.text_ajout_comp);              
+        
+        //Ajout du layout a l'alerte dialogue
+        dialogueComp.setView(v);
+        
+        //Bouton
+        dialogueComp.setPositiveButton(R.string.text_envoie,
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        dialogueComp.setNegativeButton(R.string.text_annulation,
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        
+
+ 
+        //Creation et affichage
+        AlertDialog alert11 = dialogueComp.create();
+        alert11.show();
+    }	
+	
+    public boolean recupCompetences(){
+	    
+    	ReseauCompetence r = new ReseauCompetence(this.getActivity());
+    	ArrayList<Competence> listeCompetences = new ArrayList<Competence>();
+    	r.execute("3",listeCompetences);   
+    	
+    	return true;
+    } 	
 
 }

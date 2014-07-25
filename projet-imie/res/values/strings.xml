@@ -42,7 +42,7 @@
     <string name="text_gerer_mon_compte">Gérer mon compte</string>
     <string name="text_modifier_mdp">Modifier mon mot de passe</string>
     <string name="text_supprimer_compte">Supprimer mon compte</string>
-    <string name="text_competence">Competence</string>
+    <string name="text_competence">COMPÉTENCES</string>
     <string name="text_competence_voulu">Compétences voulues</string>
     <string name="text_description">Description</string>
     <string name="text_titre">Titre</string>
@@ -125,6 +125,7 @@
     <string name="text_btn_offres">OFFRES</string>
     <string name="text_btn_vosmessages">MESSAGES</string>
     <string name="text_btn_compte_profil">GÉREZ VOTRE PROFIL</string>
+    <string name="text_btn_compte_creer">AJOUTER</string>
     
     <!-- texte description image -->
     <string name="text_descimagebutton">image bouton ajout</string>
@@ -185,6 +186,8 @@
 	    <item>2</item>
 	    <item>3</item>
 	</string-array>
+	
+	<string name="text_adresse_api_webservice">http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/</string>
     
 </resources>
 

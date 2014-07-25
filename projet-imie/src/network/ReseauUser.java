@@ -3,8 +3,11 @@ package network;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -13,23 +16,24 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.imie.rennes.classes.Utilisateur;
+import com.imie.rennes.mainActivity.MainActivity;
+
+import android.R.string;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.imie.rennes.imienetwork.R;
-import com.imie.rennes.mainActivity.LoginActivity;
-import com.imie.rennes.mainActivity.MainActivity;
 
 public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	Context context;
@@ -47,10 +51,11 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	@Override
 	protected Integer doInBackground(Object... params) {
 		int result = 0;
-		this.param = Integer.parseInt((String)params[0]);
-		switch (this.param){
-			//Vide
+		param = Integer.parseInt((String)params[0]);
+		switch (param){
+			//Creation user
 			case 1:
+				result = CreateUser((Utilisateur)params[1]);
 				break;
 			//Login
 			case 2:
@@ -58,8 +63,6 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 				break;
 			//Modification mot de passe
 			case 3:
-				result = editPassword((String)params[1], (String)params[2], (String)params[3], (String)params[4], (String)params[5]);
-				break;
 				
 			default:
 				break;
@@ -69,68 +72,92 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	
 	@Override
 	protected void onPostExecute(Integer result) {
-		
-		//Récupération ressources pour affichage strings
-		Resources r = context.getResources();
-		
-		//Vérification codes retour
-		switch(this.param){
-		//Retour Creation user
-		case 1:
-			if(result == 200 || result == 201){
-				Intent monIntent = new Intent(context, MainActivity.class);
-				context.startActivity(monIntent);
-			}
-			break;
-		//Retour Login
-		case 2:
-			//Connexion ok
-			if(result == 200 ){
-				Intent monIntent = new Intent(context, MainActivity.class);
-				context.startActivity(monIntent);
-			}else if(result == 204 || result == 226){//Erreur login / mot de passe
-				Toast.makeText(context, r.getString(R.string.text_toast_wrong_login_mdp), Toast.LENGTH_SHORT).show();
-			}
-			break;
-		//Retour Modification mot de passe
-		case 3:
-			if(result == 200){//Edit ok
-				Toast.makeText(context, r.getString(R.string.text_toast_edit_mdp), Toast.LENGTH_SHORT).show();
-				Intent monIntent = new Intent(context, MainActivity.class);
-				context.startActivity(monIntent);
-			}else if(result == 206){//Ancien mot de passe éroné
-				Toast.makeText(context, r.getString(R.string.text_toast_wrong_oldpwd), Toast.LENGTH_SHORT).show();
-			}else if (result == 204 || result == 207){
-				Toast.makeText(context, r.getString(R.string.text_toast_pb_connexion), Toast.LENGTH_SHORT).show();
-				Intent monIntent = new Intent(context, LoginActivity.class);
-				context.startActivity(monIntent);
-			}
-			break;
-			
-		default:
-			break;
+		//En cas d'utilisateur creer ou mise ï¿½ jour
+		if((param == 1  && result == 200) || (param == 1 && result == 201)){
+			Intent monIntent = new Intent(context, MainActivity.class);
+			context.startActivity(monIntent);
 		}
-		
+		//Login
+		if(param == 2  && result == 200){
+			Intent monIntent = new Intent(context, MainActivity.class);
+			context.startActivity(monIntent);
+		}
+		if((param == 2 && result == 204) || (param == 2 && result == 226)){
+			Toast.makeText(context, "Erreur dans le login ou le mot de passe", Toast.LENGTH_SHORT).show();
+		}
 		progDailog.dismiss();
 	}
 	
 	@Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progDailog.setMessage(this.context.getResources().getString(R.string.text_toast_loading));
+        progDailog.setMessage("Chargement...");
         progDailog.setIndeterminate(false);
         progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progDailog.setCancelable(false);
         progDailog.show();
     }
 	
-	/**
-	 * Connexion au webservice, récupération de l'user si connexion ok
-	 * @param url
-	 * @param login
-	 * @param mdp
-	 * @return valeur retour webservice
-	 */
+	
+	
+	//Creation of a User
+	public int CreateUser(Utilisateur utilisateur) {
+		
+		  String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/"+utilisateur.getId()+".json";
+		
+	  	  try {
+	  		  
+	  		  
+	            // 1. create HttpClient
+	            HttpClient httpclient = new DefaultHttpClient();
+	 
+	            // 2. make POST request to the given URL
+	            HttpPut httpPut = new HttpPut(url);
+	 
+	            // 3. build jsonObject	                 
+	            JSONObject jsonObject = new JSONObject();
+	            jsonObject.put("id", utilisateur.getId());
+	            jsonObject.put("nom", utilisateur.getNom());
+	            jsonObject.put("prenom", utilisateur.getPrenom());
+	            jsonObject.put("adresse", utilisateur.getAdresse());
+	            jsonObject.put("telephone", utilisateur.getTelephone());
+	            jsonObject.put("status", utilisateur.getStatus());
+	            jsonObject.put("login", utilisateur.getLogin());
+	            jsonObject.put("email", utilisateur.getEmail());
+	            jsonObject.put("langue", utilisateur.getLangue());
+	            
+	            
+	            // 4. convert JSONObject to JSON to String
+	            String json = jsonObject.toString();
+	            Log.e("json", json);
+	            
+	            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		        nameValuePairs.add(new BasicNameValuePair("object", json)); 
+		        String token = "c8cce43de370cf5bcd6b5a86f3acc71a7366c9afde842ea8d441a1828ad6b88a";
+		        nameValuePairs.add(new BasicNameValuePair("token", token)); 
+		        
+	            // 5. set httpPost Entity
+	            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	 
+	            // 6. Set some headers to inform server about the type of the content   
+	            httpPut.setHeader("Content-type", "application/json");
+	            
+	            // 7. Execute POST request to the given URL
+	            HttpResponse httpResponse = httpclient.execute(httpPut);
+	 
+	            // 8. receive response as inputStream
+	            int value = (int)httpResponse.getStatusLine().getStatusCode();
+	            
+	            
+	            Log.e("code", Integer.toString(value));
+	            return value;
+	            
+	  		  
+	  	  } catch (Exception e) {
+	  	    Log.e("[PUT REQUEST]", "Network exception", e);
+	  	  }
+		return 0;
+  	}
 	
 	//Login
 	public int Login(String url, String login, String mdp){
@@ -149,7 +176,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	    try {
 	    	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	        nameValuePairs.add(new BasicNameValuePair("login", login)); 
-	        nameValuePairs.add(new BasicNameValuePair("password", base64)); 
+	        nameValuePairs.add(new BasicNameValuePair("password", base64.substring(0,base64.length()-1))); 
 
 	        // Add your data
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -164,9 +191,11 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		        // RÃ©cupÃ¨re le token renvoyÃ© par l'api
 		        JSONObject jsonPref = new JSONObject(EntityUtils.toString(response.getEntity()));	        	 
 		        addTokenToPref(jsonPref);
-		        addUserToPref(jsonPref);
+		        createUserFromJson(jsonPref);
 		        Log.e("code", Integer.toString(value));
+		        
 	        }
+
 	        return value;
 	        
 	    } catch (ClientProtocolException e) {
@@ -180,94 +209,20 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	    return 0;
 	}
 	
-	/**
-	 * Modification du password de l'user. Avec nouveau et ancien mot de passe récupérés de la vue
-	 * @param url
-	 * @param oldPassword
-	 * @param newPassword
-	 * @param idUser
-	 * @param token
-	 * @return valeur retour webservice
-	 */
-	public int editPassword(String url, String oldPassword, String newPassword, String idUser, String token){
+	//Modification du mot de passe
+	public int editPassword(String url, String oldPassword, String newPassword, int idUser, String token){
 		
-		byte[] oldPwdBytes=null;
-		byte[] newPwdBytes=null;
 		
-		//gestion mot de passe en base64
-    	try {
-    		oldPwdBytes = oldPassword.getBytes("UTF-8");
-    		newPwdBytes = newPassword.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e1) {
-        e1.printStackTrace();
-        }
-    	
-    	String oldPwd64 = Base64.encodeToString(oldPwdBytes, Base64.DEFAULT);
-    	String newPwd64 = Base64.encodeToString(newPwdBytes, Base64.DEFAULT);
-		
-		try{
-			Resources r = this.context.getResources();
-			
-			 // create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
- 
-            // make PUT request to the given URL
-            HttpPut httpPut = new HttpPut(url);
-            
-            //Récupération des paramètres
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	        nameValuePairs.add(new BasicNameValuePair(r.getString(R.string.gen_id_user), idUser)); 
-	        nameValuePairs.add(new BasicNameValuePair(r.getString(R.string.gen_token), token)); 
-	        nameValuePairs.add(new BasicNameValuePair(r.getString(R.string.edit_pwd_new_pwd), newPwd64.substring(0, newPwd64.length()-1))); 
-	        nameValuePairs.add(new BasicNameValuePair(r.getString(R.string.edit_pwd_old_pwd), oldPwd64.substring(0,oldPwd64.length()-1))); 
-	        
-            //set httpPost Entity
-            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-  
-            //Execute PUT request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPut);
-            
-            //receive response as inputStream
-            int value = (int)httpResponse.getStatusLine().getStatusCode();
-            
-            Log.e("code", Integer.toString(value));
-            return value;
-			
-		}catch(Exception e){
-			Log.e("[PUT REQUEST] Editing password", "Network exception", e);
-		}
 		
 		return 0;
 	}
 	
-	/**
-	 * Ajout du stirng token dans les préférences de l'application
-	 * @param json
-	 */
 	private void addTokenToPref(JSONObject json){
     	
     	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		this.editor = preferences.edit();
 		try {
 			editor.putString("TOKEN_USER", json.getString("token"));
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		editor.commit();		
-	}
-	
-	/**
-	 * Ajout du string json de l'user dans les préférences
-	 * @param json
-	 */
-	private void addUserToPref(JSONObject json){
-    	
-		try {
-			editor.putString("CURRENT_USER", json.getString("utilisateur"));
-			editor.putInt("UNREAD_MSG", json.getInt("message_count"));
-			editor.putString("LIST_EVENT", json.getString("evenements"));
-			editor.commit();
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -301,6 +256,30 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		}
 		
 		return messageRetour;
+		
+	}
+
+	/**
+	 * Enregistre le json du current_user dans les préférences
+	 * @param json
+	 */
+	private void createUserFromJson(JSONObject json){
+		
+		try {
+			Gson gson = new Gson();
+			editor.putString("CURRENT_USER", json.getString("utilisateur"));
+			editor.commit();
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	
+	private Utilisateur addCompetenceToUser(){
+		
+		return new Utilisateur();
 		
 	}
 }

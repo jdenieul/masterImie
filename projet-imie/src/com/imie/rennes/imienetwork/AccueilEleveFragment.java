@@ -14,6 +14,7 @@ import com.imie.rennes.classes.CV;
 import com.imie.rennes.classes.ItemRow;
 import com.jensdriller.libs.undobar.UndoBar;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -91,13 +92,6 @@ public class AccueilEleveFragment extends Fragment {
 			@Override
             public void onStartClose(int position, boolean right) {
                 Log.d("swipe", String.format("onStartClose %d", position));
-            }
-
-			@Override
-            public void onClickFrontView(int position) {
-				super.onClickFrontView(position);
-		         Fragment fragment = new VisualiserCompetenceFragment();
-			    ((MainActivity) getActivity()).changeFragment(fragment);
             }
 
 			@Override
@@ -233,52 +227,26 @@ public static void deleteSelectedItemCv(int position){
 	
 public void dialogueAjoutCompetence(){
 	
-		Drawable background = getResources().getDrawable(R.drawable.background_popup);
+		/*Drawable background = getResources().getDrawable(R.drawable.background_popup);
 	
 		//Creation nouvelle alerte dialogue
-    	AlertDialog.Builder DialogueComp = new AlertDialog.Builder(getActivity());
-    	DialogueComp.setCancelable(true);
+    	AlertDialog.Builder dialogueComp = new AlertDialog.Builder(getActivity());
+    	View v = this.getActivity().getLayoutInflater().inflate(R.layout.fragment_ajout_competence_eleve, null); 
+    	dialogueComp.setCancelable(true);
         
-    	DialogueComp.setTitle(R.string.text_ajout_comp);
-        
-        //Creation d'un layout
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(10, 10, 10, 10);
-        setRes(layout, background);
-        
-        //Creation champ
-        final Spinner spinner_comp = new Spinner(getActivity());
-        final RadioGroup rg = new RadioGroup(getActivity());
-        final RadioButton radiobutton_comp_deb = new RadioButton(getActivity());
-        radiobutton_comp_deb.setText(R.string.text_debutant);
-        rg.addView(radiobutton_comp_deb);
-        final RadioButton radiobutton_comp_conf = new RadioButton(getActivity());
-        radiobutton_comp_conf.setText(R.string.text_confirmer);
-        rg.addView(radiobutton_comp_conf);
-        final RadioButton radiobutton_comp_app = new RadioButton(getActivity());
-        radiobutton_comp_app.setText(R.string.text_apprentit);
-        rg.addView(radiobutton_comp_app);
-        final RadioButton radiobutton_comp_mai = new RadioButton(getActivity());
-        radiobutton_comp_mai.setText(R.string.text_maitrise);
-        rg.addView(radiobutton_comp_mai);
-        
-        //Ajout des champs au layout
-        layout.addView(spinner_comp);
-        layout.addView(rg);
-        
+    	dialogueComp.setTitle(R.string.text_ajout_comp);              
         
         //Ajout du layout a l'alerte dialogue
-        DialogueComp.setView(layout);
+        dialogueComp.setView(v);
         
         //Bouton
-        DialogueComp.setPositiveButton(R.string.text_envoie,
+        dialogueComp.setPositiveButton(R.string.text_envoie,
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
             }
         });
-        DialogueComp.setNegativeButton(R.string.text_annulation,
+        dialogueComp.setNegativeButton(R.string.text_annulation,
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
@@ -286,8 +254,8 @@ public void dialogueAjoutCompetence(){
         });
  
         //Creation et affichage
-        AlertDialog alert11 = DialogueComp.create();
-        alert11.show();
+        AlertDialog alert11 = dialogueComp.create();
+        alert11.show();*/
     }
 
 public void dialogueAjoutCV(){

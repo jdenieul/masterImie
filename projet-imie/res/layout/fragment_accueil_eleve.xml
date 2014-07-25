@@ -70,7 +70,6 @@
          swipe:swipeCloseAllItemsWhenMoveList="true"
          swipe:swipeMode="both" />
      
-
     <ImageButton
         android:id="@+id/imageButtonAjouterCompetence"
         android:contentDescription="@string/text_descimagebutton"
