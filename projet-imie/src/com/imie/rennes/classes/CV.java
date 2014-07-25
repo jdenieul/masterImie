@@ -1,6 +1,5 @@
 package com.imie.rennes.classes;
 
-import android.media.Image;
 
 public class CV {
 
