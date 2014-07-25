@@ -1,18 +1,14 @@
 package com.imie.rennes.mainActivity;
 
-import java.io.UnsupportedEncodingException;
 import java.util.GregorianCalendar;
 
 import network.ReseauExperience;
 import network.ReseauUser;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
@@ -50,7 +46,6 @@ public class LoginActivity extends ActionBarActivity {
         getSupportActionBar().setBackgroundDrawable(background);
         getSupportActionBar().setTitle(R.string.titre_login);
         
-
         boutonConnexion = (Button) this.findViewById(R.id.buttonConnexion);
 		nom = (EditText) this.findViewById(R.id.editTextLogin);
 		mdp = (EditText) this.findViewById(R.id.editTextMdp);
