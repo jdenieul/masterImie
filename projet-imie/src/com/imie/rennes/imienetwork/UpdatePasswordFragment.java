@@ -1,5 +1,7 @@
 package com.imie.rennes.imienetwork;
 
+import network.ReseauUser;
+
 import com.google.gson.Gson;
 import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.mainActivity.MainActivity;
@@ -52,15 +54,23 @@ public class UpdatePasswordFragment extends Fragment {
 		
 		buttonEnvoyer.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
+				
+				String oldPwdString = String.valueOf(oldMDP.getText());
+				String newPwdString = String.valueOf(newMDP.getText());
+				String secondNewMdp = String.valueOf(newAgainMDP.getText());
+				
 				//Verif champs non vides
-				if(!String.valueOf(newMDP.getText()).equals("")){
+				if(!newPwdString.equals("")){
 					//Vérif concordance des 2 mots de passe
-					if (String.valueOf(newMDP.getText()).equals(String.valueOf(newAgainMDP.getText()))) {
+					if (newPwdString.equals(secondNewMdp)) {
 						
 						//Envoi webservice pour verif et modification
+						validNewPassword(oldPwdString, newPwdString);
 						
-						Fragment fragment = new AccueilEleveFragment();
+						//Retour accueil
+						Fragment fragment = new DashboardFragment();
 						((MainActivity) getActivity()).changeFragment(fragment);
+						
 					}else{
 						Toast.makeText(getActivity(), R.string.text_toast_different_password,Toast.LENGTH_SHORT).show();
 					}
@@ -86,5 +96,20 @@ public class UpdatePasswordFragment extends Fragment {
 		
 		return frag;
 	}
+	
+	/**
+	 * Récupération des passwords et envoi modifications REseauUser qui gère enbackground
+	 * @param oldPwd
+	 * @param newPwd
+	 * @return
+	 */
+	 public boolean validNewPassword(String oldPwd, String newPwd){
+	    	
+    	String url = getString(R.string.url_base_api);
+    	ReseauUser r = new ReseauUser(this.getActivity());    	
+    	r.execute("3",url, nom.getText().toString(), mdp.getText().toString());   
+    	
+    	return true;
+	}   
 
 }

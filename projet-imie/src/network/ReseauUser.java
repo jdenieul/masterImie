@@ -61,6 +61,8 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 			case 2:
 				result = Login((String)params[1], (String)params[2], (String)params[3]);
 				break;
+			//Modification mot de passe
+			case 3:
 				
 			default:
 				break;
@@ -205,6 +207,14 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 			e.printStackTrace();
 		}
 	    return 0;
+	}
+	
+	//Modification du mot de passe
+	public int editPassword(String url, String oldPassword, String newPassword, int idUser, String token){
+		
+		
+		
+		return 0;
 	}
 	
 	private void addTokenToPref(JSONObject json){

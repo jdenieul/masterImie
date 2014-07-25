@@ -1,18 +1,14 @@
 package com.imie.rennes.mainActivity;
 
-import java.io.UnsupportedEncodingException;
 import java.util.GregorianCalendar;
 
 import network.ReseauExperience;
 import network.ReseauUser;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Editable;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
@@ -100,7 +96,6 @@ public class LoginActivity extends ActionBarActivity {
     	ReseauUser r = new ReseauUser(this);    	
     	r.execute("2",url, nom.getText().toString(), mdp.getText().toString());   
     	
-
     	return true;
     }   
     

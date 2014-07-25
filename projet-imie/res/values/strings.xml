@@ -148,6 +148,9 @@
     <string name="text_toast_blank_password">Veuillez remplir les champs</string>
     <string name="text_toast_different_password">Les mots de passe ne correspondent pas</string>
     
+    <!-- URL -->
+    <string name="url_base_api">http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/</string>
+    
     <string-array name="array_names">
 	    <item>Contrat en alternance</item>
 	    <item>CDD</item>
