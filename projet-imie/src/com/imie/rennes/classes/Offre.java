@@ -1,5 +1,6 @@
 package com.imie.rennes.classes;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -13,11 +14,12 @@ public class Offre {
 	private String description;
 	private String detailContact;
 	private int duree;
-	private GregorianCalendar dateDebut;
+	private Date dateDebut;
+	private Date dateFin;
 	private String detailsContact;	
 	private String typePoste;
-	private GregorianCalendar dateModification;
-	private GregorianCalendar datePublication;
+	private Date dateModification;
+	private Date datePublication;
 	private String emailContact;
 	
 	private ArrayList<Ville> villes;
@@ -29,8 +31,8 @@ public class Offre {
 	 * @param titre
 	 * @param description
 	 * @param detailContact
-	 * @param duree
 	 * @param dateDebut
+	 * @param dateFin
 	 * @param detailsContact
 	 * @param typePoste
 	 * @param dateModification
@@ -41,10 +43,10 @@ public class Offre {
 	 * @param typeContrat
 	 */
 	public Offre(int id, String titre, String description,
-			String detailContact, int duree, GregorianCalendar dateDebut,
+			String detailContact, Date dateDebut, Date dateFin,
 			String detailsContact, String typePoste,
-			GregorianCalendar dateModification,
-			GregorianCalendar datePublication, String emailContact,
+			Date dateModification,
+			Date datePublication, String emailContact,
 			ArrayList<Ville> villes, ArrayList<Competence> competences,
 			TypeContrat typeContrat) {
 		super();
@@ -52,8 +54,8 @@ public class Offre {
 		this.titre = titre;
 		this.description = description;
 		this.detailContact = detailContact;
-		this.duree = duree;
 		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
 		this.detailsContact = detailsContact;
 		this.typePoste = typePoste;
 		this.dateModification = dateModification;
@@ -118,28 +120,28 @@ public class Offre {
 		this.detailContact = detailContact;
 	}
 	/**
-	 * @return the duree
-	 */
-	public int getDuree() {
-		return duree;
-	}
-	/**
-	 * @param duree the duree to set
-	 */
-	public void setDuree(int duree) {
-		this.duree = duree;
-	}
-	/**
 	 * @return the dateDebut
 	 */
-	public GregorianCalendar getDateDebut() {
+	public Date getDateDebut() {
 		return dateDebut;
 	}
 	/**
 	 * @param dateDebut the dateDebut to set
 	 */
-	public void setDateDebut(GregorianCalendar dateDebut) {
+	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
+	}
+	/**
+	 * @return the dateFin
+	 */
+	public Date getDateFin() {
+		return dateFin;
+	}
+	/**
+	 * @param dateFin the dateFin to set
+	 */
+	public void setDateFin(Date dateFin) {
+		this.dateFin = dateFin;
 	}
 	/**
 	 * @return the detailsContact
@@ -168,25 +170,25 @@ public class Offre {
 	/**
 	 * @return the dateModification
 	 */
-	public GregorianCalendar getDateModification() {
+	public Date getDateModification() {
 		return dateModification;
 	}
 	/**
 	 * @param dateModification the dateModification to set
 	 */
-	public void setDateModification(GregorianCalendar dateModification) {
+	public void setDateModification(Date dateModification) {
 		this.dateModification = dateModification;
 	}
 	/**
 	 * @return the datePublication
 	 */
-	public GregorianCalendar getDatePublication() {
+	public Date getDatePublication() {
 		return datePublication;
 	}
 	/**
 	 * @param datePublication the datePublication to set
 	 */
-	public void setDatePublication(GregorianCalendar datePublication) {
+	public void setDatePublication(Date datePublication) {
 		this.datePublication = datePublication;
 	}
 	/**

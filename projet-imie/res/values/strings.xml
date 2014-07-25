@@ -84,6 +84,7 @@
     <string name="text_titre_annonce">TITRE DE L\'ANNONCE :</string>
     <string name="titre_login">ÉCOLE DE LA FILIERE NUMÉRIQUE</string>
     <string name="textview_datedebut">DATE DE DÉBUT : </string>
+    <string name="textview_datefin">DATE DE FIN : </string>
     <string name="textview_duree">DURÉE (en mois) :</string> 
     <string name="textview_typedecontrat">TYPE DE CONTRAT :</string>
     <string name="textview_detailcontact">DÉTAIL DU CONTACT :</string>
@@ -135,6 +136,7 @@
     <!-- Textes exemples -->
     <string name="text_exemple_sujet_offre">Developpeur Android</string>
     <string name="text_exemple_datedebut_offre">10/04/2014</string>
+    <string name="text_exemple_datefin_offre">10/04/2014</string>
     <string name="text_exemple_duree_offre">5</string>
     <string name="text_exemple_contact_offre">Jean-Jacques Goldman</string>
     <string name="text_exemple_email_offre">exemple@domaine.fr</string>

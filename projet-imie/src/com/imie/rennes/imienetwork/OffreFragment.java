@@ -3,6 +3,9 @@ package com.imie.rennes.imienetwork;
 import java.util.ArrayList;
 import java.util.List;
 
+import network.ReseauOffre;
+import network.ReseauUser;
+
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.imie.rennes.adapteur.ItemAdapterOffre;
@@ -97,7 +100,8 @@ public class OffreFragment extends Fragment {
 	
 		listViewOffre.setAdapter(adapter);
         
-        
+		ReseauOffre r = new ReseauOffre(getActivity());
+    	r.execute("2"); 
         for(int i=0;i<10;i++)
         {
         	itemData.add(new ItemRow("Offre "+i, "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "10/04/2014" ));

@@ -63,22 +63,22 @@
 		        style="@style/CustomEditTextView" />
 		   
 		   <TextView
-		        android:id="@+id/textviewduree"
-		        android:text="@string/textview_duree"
-		        android:layout_alignLeft="@+id/edittextduree"
+		        android:id="@+id/textviewdatefin"
+		        android:text="@string/textview_datefin"
+		        android:layout_alignLeft="@+id/datepickerdatefin"
 		        android:layout_alignBottom="@+id/textviewdatedebut"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="20dp" />
 		    
 		   <EditText
-		        android:id="@+id/edittextduree"
+		        android:id="@+id/datepickerdatefin"
 		        android:layout_width="wrap_content"
+		        android:focusable="false"
+		        android:hint="@string/text_exemple_datedebut_offre"
 		        android:layout_toRightOf="@+id/datepickerdatedebut"
 		        android:layout_alignBottom="@+id/datepickerdatedebut"
 		        android:layout_marginLeft="5dp"
-		        android:inputType="number"
-		        android:hint="@string/text_exemple_duree_offre"
 		        style="@style/CustomEditTextView" />
 		   
 		   <TextView

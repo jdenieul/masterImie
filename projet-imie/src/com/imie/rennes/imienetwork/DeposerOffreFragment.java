@@ -1,18 +1,12 @@
 package com.imie.rennes.imienetwork;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-
+import java.util.Date;
 import network.ReseauOffre;
-import network.ReseauUser;
-
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import com.imie.rennes.classes.Offre;
-import com.imie.rennes.mainActivity.MainActivity;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,7 +24,7 @@ public class DeposerOffreFragment extends Fragment {
 	
 	Button buttonEnvoyer;
 	Button buttonAnnuler;
-	EditText datepicker, editTexttitre, datepickerdatedebut, edittextduree, edittextdetailcontact, edittextemailcontact, edittextdescription;
+	EditText datepicker, datepickerfin ,editTexttitre, datepickerdatedebut, edittextdetailcontact, edittextemailcontact, edittextdescription;
 	Spinner spinnertypedecontrat;
 	
 	@Override
@@ -39,9 +33,9 @@ public class DeposerOffreFragment extends Fragment {
 		
 		buttonEnvoyer = (Button)frag.findViewById(R.id.buttonEnvoyer);
 		datepicker = (EditText)frag.findViewById(R.id.datepickerdatedebut);
+		datepickerfin = (EditText)frag.findViewById(R.id.datepickerdatefin);
 		editTexttitre = (EditText)frag.findViewById(R.id.editTexttitre);
 		datepickerdatedebut = (EditText)frag.findViewById(R.id.datepickerdatedebut);
-		edittextduree = (EditText)frag.findViewById(R.id.edittextduree);
 		edittextdetailcontact = (EditText)frag.findViewById(R.id.edittextdetailcontact);
 		edittextemailcontact = (EditText)frag.findViewById(R.id.edittextemailcontact);
 		edittextdescription = (EditText)frag.findViewById(R.id.edittextdescription);
@@ -69,6 +63,28 @@ public class DeposerOffreFragment extends Fragment {
 	            mDatePicker.show();  }
 	    });
 		
+		datepickerfin.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+	            // TODO Auto-generated method stub
+	            //To show current date in the datepicker
+	            Calendar mcurrentDate=Calendar.getInstance();
+	            int mYear = mcurrentDate.get(Calendar.YEAR);
+	            int mMonth = mcurrentDate.get(Calendar.MONTH);
+	            int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+	            DatePickerDialog mDatePicker=new DatePickerDialog(getActivity(), new OnDateSetListener() {                  
+	                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+	                    // TODO Auto-generated method stub     
+	                	String date = String.valueOf(String.valueOf(selectedday) + '/' + String.valueOf(selectedmonth) + '/' + String.valueOf(selectedyear));
+	                    DeposerOffreFragment.this.datepickerfin.setText(date);
+	                }
+	            },mYear, mMonth, mDay);
+	            mDatePicker.setTitle("Selectionner une date");                
+	            mDatePicker.show();  }
+	    });
+		
 		buttonEnvoyer.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
 				CreationOffre();
@@ -84,11 +100,14 @@ public class DeposerOffreFragment extends Fragment {
 		offre.setTitre(editTexttitre.getText().toString());
 		offre.setDescription(edittextdescription.getText().toString());
 		offre.setDetailsContact(edittextdetailcontact.getText().toString());
-		offre.setDuree(Integer.parseInt(edittextduree.getText().toString()));
+		offre.setEmailContact(edittextemailcontact.getText().toString());
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy").withOffsetParsed();
-		DateTime dateTime = formatter.parseDateTime(datepickerdatedebut.getText().toString());
-		GregorianCalendar cal = dateTime.toGregorianCalendar();
+		DateTime dateTime = formatter.parseDateTime(datepicker.getText().toString());
+		Date cal = dateTime.toDate();
 		offre.setDateDebut(cal);
+		DateTime dateTimefin = formatter.parseDateTime(datepickerfin.getText().toString());
+		Date calfin = dateTimefin.toDate();
+		offre.setDateFin(calfin);
 		offre.setTypePoste(spinnertypedecontrat.getSelectedItem().toString());
 		ReseauOffre r = new ReseauOffre(getActivity());
     	r.execute("1", offre);
