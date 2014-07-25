@@ -59,6 +59,7 @@ public class LoginActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				validConnexion();
+				
 			}
 		});
     }
@@ -85,8 +86,12 @@ public class LoginActivity extends ActionBarActivity {
     
     public void validConnexion(){
     	
-    	Utilisateur utilisateur = new Utilisateur(this);    	    	
-		login();
+    	Utilisateur utilisateur = new Utilisateur(this);    
+    	Intent monIntent = new Intent(this, MainActivity.class);
+		this.startActivity(monIntent);
+		//A REMETTRE
+		//login();
+		
     	//createExperience();		
 		//adduUser();
     }
@@ -97,13 +102,13 @@ public class LoginActivity extends ActionBarActivity {
      */
     public boolean login(){
     	
-    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
+    	//String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
+    	String url = "http://10.0.7.9:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";  
     	ReseauUser r = new ReseauUser(this);    	
     	r.execute("2",url, nom.getText().toString(), mdp.getText().toString());   
     	
-
     	return true;
-    }   
+    }
     
     public boolean createExperience(){    	
         

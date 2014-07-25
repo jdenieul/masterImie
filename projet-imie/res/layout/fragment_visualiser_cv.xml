@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#F3F2F0"
     tools:context=".VisualiserCvActivity" >
-
+<!-- 
     <android.support.v7.internal.widget.CompatTextView
         android:id="@+id/textViewElementMenu"
         android:layout_width="wrap_content"
@@ -18,5 +18,14 @@
         android:layout_centerVertical="true"
         android:text="@string/text_visionner_cv"
         style="@style/compatTitreOrange"/>
+ -->
 
+    <TextView
+        android:id="@+id/textPasPDF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp" />
+ 
 </RelativeLayout>
