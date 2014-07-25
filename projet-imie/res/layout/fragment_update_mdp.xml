@@ -29,7 +29,7 @@
 	        android:text="@string/text_old_MDP" />
 	
 	    <EditText
-	        android:id="@+id/editTextLastMdp"
+	        android:id="@+id/editTextOldMdp"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignBaseline="@+id/textViewOldMdp"

@@ -1,14 +1,18 @@
 package com.imie.rennes.mainActivity;
 
+import java.io.UnsupportedEncodingException;
 import java.util.GregorianCalendar;
 
 import network.ReseauExperience;
 import network.ReseauUser;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
@@ -46,6 +50,7 @@ public class LoginActivity extends ActionBarActivity {
         getSupportActionBar().setBackgroundDrawable(background);
         getSupportActionBar().setTitle(R.string.titre_login);
         
+
         boutonConnexion = (Button) this.findViewById(R.id.buttonConnexion);
 		nom = (EditText) this.findViewById(R.id.editTextLogin);
 		mdp = (EditText) this.findViewById(R.id.editTextMdp);
@@ -54,6 +59,7 @@ public class LoginActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				validConnexion();
+				
 			}
 		});
     }
@@ -80,8 +86,12 @@ public class LoginActivity extends ActionBarActivity {
     
     public void validConnexion(){
     	
-    	Utilisateur utilisateur = new Utilisateur(this);    	    	
-		login();
+    	Utilisateur utilisateur = new Utilisateur(this);    
+    	Intent monIntent = new Intent(this, MainActivity.class);
+		this.startActivity(monIntent);
+		//A REMETTRE
+		//login();
+		
     	//createExperience();		
 		//adduUser();
     }
@@ -92,12 +102,13 @@ public class LoginActivity extends ActionBarActivity {
      */
     public boolean login(){
     	
-    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
+    	//String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
+    	String url = "http://10.0.7.9:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";  
     	ReseauUser r = new ReseauUser(this);    	
     	r.execute("2",url, nom.getText().toString(), mdp.getText().toString());   
     	
     	return true;
-    }   
+    }
     
     public boolean createExperience(){    	
         

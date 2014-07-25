@@ -3,7 +3,6 @@ package network;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -150,7 +149,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	    try {
 	    	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	        nameValuePairs.add(new BasicNameValuePair("login", login)); 
-	        nameValuePairs.add(new BasicNameValuePair("password", base64.substring(0,base64.length()-1))); 
+	        nameValuePairs.add(new BasicNameValuePair("password", base64)); 
 
 	        // Add your data
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -275,4 +274,33 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		}
 		editor.commit();		
 	}	
+	
+	/*
+	 * Retourne le message selon le code de retour
+	 */
+	private String verifCode(int valueRetour){
+		
+		String messageRetour = "";
+		
+		switch (valueRetour) {
+		
+		case 200:
+			messageRetour = "Connexion effectuée.";
+			break;		
+		
+		case 204:
+			messageRetour = "Le login ou le mot de passe est incorrect.";
+			break;
+			
+		case 226:
+			messageRetour = "Le login ou le mot de passe est manquant.";
+			break;			
+
+		default:			
+			break;
+		}
+		
+		return messageRetour;
+		
+	}
 }

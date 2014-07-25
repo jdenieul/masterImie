@@ -2,15 +2,20 @@ package com.imie.rennes.imienetwork;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import network.UploadToServer;
+
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.imie.rennes.adapteur.ItemAdapterCV;
 import com.imie.rennes.adapteur.ItemAdapterCompetence;
 import com.imie.rennes.mainActivity.MainActivity;
+import com.imie.rennes.classes.CV;
 import com.imie.rennes.classes.ItemRow;
 import com.jensdriller.libs.undobar.UndoBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class AccueilEleveFragment extends Fragment {
 
@@ -36,7 +42,9 @@ public class AccueilEleveFragment extends Fragment {
 	static ItemAdapterCompetence adapterComp;
 	ItemAdapterCV adapteurCv;
 	ImageButton imageButtonAjouterCompetence;
+	ImageButton imageButtonAjouterCV;
 	static LayoutInflater inflater;
+	static CV monCV;
 	
 	
 	
@@ -48,6 +56,7 @@ public class AccueilEleveFragment extends Fragment {
 		listViewCv = (SwipeListView)frag.findViewById(R.id.listViewCv);
 		listViewCompetence = (SwipeListView)frag.findViewById(R.id.listViewCompetence);
 		imageButtonAjouterCompetence = (ImageButton)frag.findViewById(R.id.imageButtonAjouterCompetence);
+		imageButtonAjouterCV = (ImageButton)frag.findViewById(R.id.imageButtonAjouterCv);
 		
 		/*************************************/
 		/*   Slide list view of Competence   */
@@ -123,7 +132,7 @@ public class AccueilEleveFragment extends Fragment {
         
         for(int i=0;i<10;i++)
         {
-        	itemDataComp.add(new ItemRow("CompÃ©tence "+i, "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "10/04/2014" ));
+        	itemDataComp.add(new ItemRow("Competence "+i, "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "10/04/2014" ));
         }
         
         adapterComp.notifyDataSetChanged();
@@ -179,7 +188,7 @@ public class AccueilEleveFragment extends Fragment {
         });
         
         //These are the swipe listview settings. you can change these
-        //setting as your requirement 
+        //setting as your requirement
         listViewCv.setSwipeMode(SwipeListView.SWIPE_MODE_BOTH); // there are five swiping modes
         listViewCv.setSwipeActionLeft(SwipeListView.SWIPE_ACTION_REVEAL); //there are four swipe actions
         listViewCv.setSwipeActionRight(SwipeListView.SWIPE_ACTION_REVEAL);
@@ -189,13 +198,22 @@ public class AccueilEleveFragment extends Fragment {
         listViewCv.setSwipeOpenOnLongPress(false); // enable or disable SwipeOpenOnLongPress
         listViewCv.setAdapter(adapteurCv);
         
-        itemDataCV.add(new ItemRow("Cv", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "10/04/2014" ));
+        monCV.setDateCreation("10/04/2014");
+        monCV.setEmplacement("/sdcard/example.pdf");
+        monCV.setId(1);
+        
+        itemDataCV.add(new ItemRow("Curriculum Vitae", "Cliquez ici pour accéder à votre Curriculum Vitae.", monCV.getDateCreation() ));
         
         adapteurCv.notifyDataSetChanged();
 		
 		imageButtonAjouterCompetence.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
 				dialogueAjoutCompetence();
+			}
+		});
+		imageButtonAjouterCV.setOnClickListener(new Button.OnClickListener(){
+			public void onClick(View v){
+				dialogueAjoutCV();
 			}
 		});
 		
@@ -270,6 +288,11 @@ public void dialogueAjoutCompetence(){
         //Creation et affichage
         AlertDialog alert11 = DialogueComp.create();
         alert11.show();
+    }
+
+public void dialogueAjoutCV(){
+    	Intent monIntent = new Intent(getActivity(), UploadToServer.class);
+		this.startActivity(monIntent);
     }
 
 
