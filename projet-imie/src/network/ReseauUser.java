@@ -3,8 +3,6 @@ package network;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
@@ -61,8 +59,6 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 			case 2:
 				result = Login((String)params[1], (String)params[2], (String)params[3]);
 				break;
-			//Modification mot de passe
-			case 3:
 				
 			default:
 				break;
@@ -176,7 +172,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	    try {
 	    	ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	        nameValuePairs.add(new BasicNameValuePair("login", login)); 
-	        nameValuePairs.add(new BasicNameValuePair("password", base64.substring(0,base64.length()-1))); 
+	        nameValuePairs.add(new BasicNameValuePair("password", base64)); 
 
 	        // Add your data
 	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -209,14 +205,6 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	    return 0;
 	}
 	
-	//Modification du mot de passe
-	public int editPassword(String url, String oldPassword, String newPassword, int idUser, String token){
-		
-		
-		
-		return 0;
-	}
-	
 	private void addTokenToPref(JSONObject json){
     	
     	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
@@ -232,7 +220,11 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	
 	private void addUserToPref(JSONObject json){
     	
+    	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		this.editor = preferences.edit();
 		try {
+			
+			
 			editor.putString("CURRENT_USER", json.getString("utilisateur"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -269,22 +261,26 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		return messageRetour;
 		
 	}
-
-	/**
-	 * Enregistre le json du current_user dans les préférences
-	 * @param json
-	 */
-	private void createUserFromJson(JSONObject json){
+	
+	private Utilisateur createUserFromJson(JSONObject json){
+		
+		Utilisateur currentUser = new Utilisateur();
 		
 		try {
 			Gson gson = new Gson();
+			currentUser = gson.fromJson(json.getString("utilisateur"), Utilisateur.class);
 			editor.putString("CURRENT_USER", json.getString("utilisateur"));
-			editor.commit();
+			
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return currentUser;		
+
 	}
+	
+	
 
 }

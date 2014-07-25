@@ -10,19 +10,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class VisualiserCvFragment extends Fragment {
-		static TextView textPasPDF;
+		TextView textPasPDF;
+		//Button boutonTelechargerCV;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
 		View frag = inflater.inflate(R.layout.fragment_visualiser_cv,container, false);
+		textPasPDF = (TextView)frag.findViewById(R.id.textPasPDF);
+		//boutonTelechargerCV = (Button)frag.findViewById(R.id.boutonTelechargerCV);
 		
-		File file = new File("/sdcard/example.pdf");
+		/**
+		File file = new File("example.pdf");
 		 
         if (file.exists()) {
+        	/ **
             Uri path = Uri.fromFile(file);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(path, "application/pdf");
@@ -36,9 +41,15 @@ public class VisualiserCvFragment extends Fragment {
             catch (ActivityNotFoundException e) {
             	textPasPDF.setText("Pas de viewer PDF disponible.");
             }
-		
+            ** /
         }
+        else{
+        	textPasPDF.setText("Pas de CV enregistré. Téléchargez-en un maintenant !");
+        	//boutonTelechargerCV.setVisibility(0);
+        }
+        **/
 
+    	textPasPDF.setText("Pas de CV enregistré. Téléchargez-en un maintenant !");
 		return frag;
 	}
 }
