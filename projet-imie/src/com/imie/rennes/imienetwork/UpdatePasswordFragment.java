@@ -5,7 +5,6 @@ import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.mainActivity.MainActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,28 +38,27 @@ public class UpdatePasswordFragment extends Fragment {
 		buttonSupprimer = (Button)frag.findViewById(R.id.buttonSupprimer);
 		
 		//Récupération des préférences
-		this.preferences = this.getActivity().getApplicationContext().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		this.preferences = this.getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		
 		//recup user
 		currentUser = new Utilisateur();
 		Gson gson = new Gson();
 		if(preferences.contains("CURRENT_USER")){
-			currentUser = gson.fromJson(preferences.getString("CURRENT_USER", ""), Utilisateur.class);
+			String jsonCurrentUser = preferences.getString("CURRENT_USER", "");
+			currentUser = gson.fromJson(jsonCurrentUser, Utilisateur.class);
 		}else{
 			//TODO retour login ?
 		}
 		
-		
-		String test = "";
-		
 		buttonEnvoyer.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
-				//Verif ancien mot de passe
-				
 				//Verif champs non vides
 				if(!String.valueOf(newMDP.getText()).equals("")){
 					//Vérif concordance des 2 mots de passe
 					if (String.valueOf(newMDP.getText()).equals(String.valueOf(newAgainMDP.getText()))) {
+						
+						//Envoi webservice pour verif et modification
+						
 						Fragment fragment = new AccueilEleveFragment();
 						((MainActivity) getActivity()).changeFragment(fragment);
 					}else{

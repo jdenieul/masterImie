@@ -222,11 +222,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	
 	private void addUserToPref(JSONObject json){
     	
-    	this.preferences = this.context.getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
-		this.editor = preferences.edit();
 		try {
-			
-			
 			editor.putString("CURRENT_USER", json.getString("utilisateur"));
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -263,26 +259,22 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 		return messageRetour;
 		
 	}
-	
-	private Utilisateur createUserFromJson(JSONObject json){
-		
-		Utilisateur currentUser = new Utilisateur();
+
+	/**
+	 * Enregistre le json du current_user dans les préférences
+	 * @param json
+	 */
+	private void createUserFromJson(JSONObject json){
 		
 		try {
 			Gson gson = new Gson();
-			currentUser = gson.fromJson(json.getString("utilisateur"), Utilisateur.class);
 			editor.putString("CURRENT_USER", json.getString("utilisateur"));
-			
+			editor.commit();
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return currentUser;		
-
 	}
-	
-	
 
 }
