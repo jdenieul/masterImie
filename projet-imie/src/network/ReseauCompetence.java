@@ -20,12 +20,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
+import com.imie.rennes.classes.ArrayListCompetence;
 import com.imie.rennes.classes.Competence;
 import com.imie.rennes.classes.Utilisateur;
 import com.imie.rennes.imienetwork.AccueilEleveFragment;
+import com.imie.rennes.imienetwork.ProfilFragment;
 import com.imie.rennes.imienetwork.R;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,14 +38,17 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
+	
 	Context context;
 	Integer param;
 	ProgressDialog progDailog;
 	SharedPreferences preferences;
+	ProfilFragment fragmentParent;
 	
-	public ReseauCompetence(Context context){
+	public ReseauCompetence(Context context,ProfilFragment f){
 		this.context = context;
 		this.progDailog = new ProgressDialog(context);
+		this.fragmentParent = f;
 	}
 
 
@@ -59,13 +65,14 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 			case 2:
 				
 				break;
-			case 3:				
-				result = listeCompetences((ArrayList<Competence>)params[1]);
-				 
+			case 3:			
+				
+				result = listeCompetences();				
 				break;
 			default:
 				break;
 		}
+		
 		//String string = IOUtils.toString(getInputStreamFromUrl(params[0]));
 		return result;
 	}
@@ -140,8 +147,10 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 	return 0;
 	}
 	
-	public int listeCompetences(ArrayList<Competence> listCompetences){
+	public int listeCompetences(){
 		
+		preferences = this.context.getSharedPreferences("DEFAULT",
+				Activity.MODE_PRIVATE);
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet request = new HttpGet();
         URI webService;
@@ -158,8 +167,11 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 	        if (value == 200){
 	        	
 		        JSONObject jsonListeCompetences = new JSONObject(EntityUtils.toString(response.getEntity()));
-				Gson gson = new Gson();
-				listCompetences = gson.fromJson(jsonListeCompetences.getString("competences"), ArrayList.class);
+				Gson gson = new Gson();	
+				ArrayListCompetence arrListCompetenceTemp = new ArrayListCompetence();
+				arrListCompetenceTemp = gson.fromJson(jsonListeCompetences.toString(), ArrayListCompetence.class);				
+				
+				this.fragmentParent.setListeCompetences(arrListCompetenceTemp);
 		        			
 		        Log.e("code", Integer.toString(value));
 		        
@@ -185,8 +197,57 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 			e.printStackTrace();
 		}     
 		
-		//return listCompetences;
 		return value;
+	}
+	
+	public int addCompetenceToUser(Competence competence){
+		
+		/*try {
+			
+			// R�cup�ration de l'utilisateur connect�
+			preferences = this.context.getSharedPreferences("DEFAULT",
+					Activity.MODE_PRIVATE);
+			
+	  		String url = this.context.getResources().getString(R.string.text_adresse_api_webservice) + "competence/";
+	  		  
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+ 
+            // 2. make POST request to the given URL
+            HttpPut httpPut = new HttpPut(url);
+ 
+            // 3. build jsonObject	                 
+            JSONObject jsonObject = new JSONObject();                       
+            jsonObject.put("token", preferences.getString("TOKEN_USER", ""));
+            jsonObject.put("competence", competence);
+            
+            
+            // 4. convert JSONObject to JSON to String
+            String json = jsonObject.toString();
+            Log.e("json", json);
+            
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	        nameValuePairs.add(new BasicNameValuePair("object", json)); 
+ 
+            // 5. set httpPost Entity
+            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+ 
+            // 6. Set some headers to inform server about the type of the content   
+            httpPut.setHeader("Content-type", "application/json");
+            
+            // 7. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPut);
+ 
+            // 8. receive response as inputStream
+            int value = (int)httpResponse.getStatusLine().getStatusCode();
+            Log.e("code", Integer.toString(value));
+            return value;
+            
+  		  
+  	  } catch (Exception e) {
+  	    Log.e("[PUT REQUEST]", "Network exception", e);
+  	  }
+	return 0;*/
 	}
 
 }

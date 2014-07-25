@@ -47,4 +47,11 @@ public class Competence {
 		this.libelle = libelle;
 	}
 
+	@Override
+	public String toString() {
+		return this.libelle;
+	}
+	
+	
+
 }
