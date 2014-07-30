@@ -16,7 +16,7 @@
     <RatingBar
         android:id="@+id/ratingBarNiveau"
         android:layout_below="@+id/spinnerListeCompetences"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
         android:stepSize="1.0" />	   

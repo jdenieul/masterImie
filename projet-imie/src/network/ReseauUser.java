@@ -260,7 +260,7 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 	}
 
 	/**
-	 * Enregistre le json du current_user dans les préférences
+	 * Enregistre le json du current_user dans les prï¿½fï¿½rences
 	 * @param json
 	 */
 	private void createUserFromJson(JSONObject json){
@@ -274,12 +274,5 @@ public class ReseauUser extends AsyncTask<Object,Void,Integer>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	
-	private Utilisateur addCompetenceToUser(){
-		
-		return new Utilisateur();
-		
 	}
 }

@@ -14,6 +14,8 @@ import org.json.JSONObject;
 import com.imie.rennes.classes.CV;
 import com.imie.rennes.classes.Competence;
 import com.imie.rennes.imienetwork.AccueilEleveFragment;
+import com.imie.rennes.imienetwork.ProfilFragment;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -51,7 +53,7 @@ public class ReseauCV extends AsyncTask<Object,Void,Integer>{
 	protected void onPostExecute(Integer result) {
 		//Creation Competence
 		if((param == 1  && result == 200) || (param == 1 && result == 201)){
-			Intent monIntent = new Intent(context, AccueilEleveFragment.class);
+			Intent monIntent = new Intent(context, ProfilFragment.class);
 			context.startActivity(monIntent);
 		}
 		progDailog.dismiss();

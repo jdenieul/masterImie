@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -22,11 +23,15 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.imie.rennes.classes.ArrayListCompetence;
+import com.imie.rennes.classes.ArrayListCompetenceUtilisateur;
 import com.imie.rennes.classes.Competence;
+import com.imie.rennes.classes.ItemRow;
 import com.imie.rennes.classes.Utilisateur;
-import com.imie.rennes.imienetwork.AccueilEleveFragment;
+import com.imie.rennes.classes.UtilisateurCompetence;
+import com.imie.rennes.imienetwork.MessagerieFragment;
 import com.imie.rennes.imienetwork.ProfilFragment;
 import com.imie.rennes.imienetwork.R;
+import com.imie.rennes.mainActivity.MainActivity;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -65,7 +70,7 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 				result = addCompetenceToUser((Competence)params[1],(Float) params[2]);
 				break;
 			case 2:
-				
+				result = listeCompetenceOfUser();
 				break;
 			case 3:			
 				
@@ -83,8 +88,24 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 	protected void onPostExecute(Integer result) {
 		//Creation Competence
 		if((param == 1  && result == 200) || (param == 1 && result == 201)){
-			Intent monIntent = new Intent(context, ProfilFragment.class);
-			context.startActivity(monIntent);
+			/*Intent monIntent = new Intent(context, ProfilFragment.class);
+			this.context.startActivity(monIntent);*/
+
+			ProfilFragment fragment = new ProfilFragment();
+			((MainActivity) this.fragmentParent.getActivity()).changeFragment(fragment);
+		}
+		
+		if((param == 2  && result == 200) || (param == 2 && result == 201)){
+			
+			// Remplie la liste de compétences de l'utilisateur
+			for (UtilisateurCompetence compet : this.fragmentParent.getListeCompetencesUtilisateur().getCompetences()) {
+				
+				this.fragmentParent.getItemCompetence().add(new ItemRow(compet.getCompetence().getLibelle() ,"Niveau " + compet.getNote() + ",","" ));
+				
+			}
+			
+			this.fragmentParent.getCompetenceAdapter().notifyDataSetChanged();
+			
 		}
 		progDailog.dismiss();
 	}
@@ -138,9 +159,6 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
             // 4. convert JSONObject to JSON to String
             String json = jsonObject.toString();
             Log.e("json", json);
-            
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	        nameValuePairs.add(new BasicNameValuePair("object", json)); 
  
             // 5. set httpPost Entity
             httpPut.setEntity(new StringEntity(json));
@@ -166,7 +184,7 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 	}
 	
 	public int listeCompetences(){
-		
+		 	
 		preferences = this.context.getSharedPreferences("DEFAULT",
 				Activity.MODE_PRIVATE);
         HttpClient httpclient = new DefaultHttpClient();
@@ -214,8 +232,75 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}     
-		
+				
 		return value;
 	}
 
+	
+	public int listeCompetenceOfUser(){
+		
+		preferences = this.context.getSharedPreferences("DEFAULT",
+				Activity.MODE_PRIVATE);
+		
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet request = new HttpGet();
+        URI webService;
+        int value = 0;
+        Gson gson = new Gson();
+		try {			
+	  		
+			// Récupération de l'utilisateur
+			Utilisateur currentUser = new Utilisateur();
+			
+			if(preferences.contains("CURRENT_USER")){
+				String jsonCurrentUser = preferences.getString("CURRENT_USER", "");
+				currentUser = gson.fromJson(jsonCurrentUser, Utilisateur.class);
+			}else{
+				//TODO retour login ?
+			}
+			
+			webService = new URI(this.context.getResources().getString(R.string.url_base_api) +
+					 			this.context.getResources().getString(R.string.url_utilisateur) + currentUser.getId() + 
+					 			"/competences.json?token="+preferences.getString("TOKEN_USER", ""));
+	        request.setURI(webService);
+            
+	        HttpResponse response = httpclient.execute(request);
+	        value = (int)response.getStatusLine().getStatusCode();
+	        
+	        // Si le résultat est OK
+	        if (value == 200){
+	        	
+		        JSONObject jsonListeCompetences = new JSONObject(EntityUtils.toString(response.getEntity()));
+		        ArrayListCompetenceUtilisateur arrListCompetenceTemp = new ArrayListCompetenceUtilisateur();
+				arrListCompetenceTemp = gson.fromJson(jsonListeCompetences.toString(), ArrayListCompetenceUtilisateur.class);				
+				
+				this.fragmentParent.setListeCompetencesUtilisateur(arrListCompetenceTemp);				
+		        			
+		        Log.e("code", Integer.toString(value));
+		        
+	        }
+
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}     
+		
+		return value;
+	}
+	
 }

@@ -79,7 +79,7 @@ public View getView(final int position, View convertView, ViewGroup parent) {
 					
 			@Override
 			public void onClick(View v) {
-				AccueilEleveFragment.deleteSelectedItemCv(position);
+				//AccueilEleveFragment.deleteSelectedItemCv(position);
 			}
 		});
         

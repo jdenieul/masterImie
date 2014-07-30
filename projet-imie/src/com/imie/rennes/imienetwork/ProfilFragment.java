@@ -12,9 +12,11 @@ import com.imie.rennes.adapteur.ItemAdapterCompetence;
 import com.imie.rennes.adapteur.ItemAdapterExperience;
 import com.imie.rennes.adapteur.ItemAdapterOffre;
 import com.imie.rennes.classes.ArrayListCompetence;
+import com.imie.rennes.classes.ArrayListCompetenceUtilisateur;
 import com.imie.rennes.classes.Competence;
 import com.imie.rennes.classes.ExperienceRow;
 import com.imie.rennes.classes.ItemRow;
+import com.imie.rennes.classes.UtilisateurCompetence;
 import com.imie.rennes.mainActivity.MainActivity;
 import com.jensdriller.libs.undobar.MaxWidthLinearLayout;
 import com.jensdriller.libs.undobar.UndoBar;
@@ -42,24 +44,33 @@ public class ProfilFragment extends Fragment {
 	ImageButton btnAjoutCompetence;
 	static SwipeListView listViewCompetence;
 	static SwipeListView listViewExperience;
+	static SwipeListView listViewCv;
 	List<ExperienceRow> itemExperience;
-	List<ItemRow> itemCompetence;
+	private List<ItemRow> itemCompetence;
 	ItemAdapterCompetence competenceAdapter;
 	ItemAdapterExperience experienceAdapter;
 	private Spinner spinnerCompetences;
 	private ArrayListCompetence listeCompetences;
+	private ArrayListCompetenceUtilisateur listeCompetencesUtilisateur;
+	
 	private RatingBar niveauCompetence;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View frag = inflater.inflate(R.layout.fragment_profil,container, false);
 		
+		// Récupération des objets de la vue
 		btnVoirCV = (Button)frag.findViewById(R.id.btnVoirCV);
 		btnAjoutCompetence = (ImageButton)frag.findViewById(R.id.ajouterCompetence); 
 		listViewCompetence = (SwipeListView)frag.findViewById(R.id.lvCompetences);
 		listViewExperience = (SwipeListView)frag.findViewById(R.id.lvExperiences);
 		
+		// Instancie les listes
+		listeCompetencesUtilisateur = new ArrayListCompetenceUtilisateur();
 		listeCompetences = new ArrayListCompetence();
-		recupCompetences(this.getActivity().getApplicationContext());
+		recupCompetences(this.getActivity().getApplicationContext());		
+		recupCompetencesUtilisateur(this.getActivity().getApplicationContext());
+		
+		
 		
 		/**
 		 * Gestion événements
@@ -136,14 +147,15 @@ public class ProfilFragment extends Fragment {
 		listViewCompetence.setSwipeOpenOnLongPress(false); // enable or disable SwipeOpenOnLongPress
 	
 		listViewCompetence.setAdapter(competenceAdapter);
-        
+		;
         //TODO Récupération compétences
+		/*
         for(int i=0;i<5;i++)
         {
         	itemCompetence.add(new ItemRow("Compétence "+i,"NIveau 2","Ajoutée le 14 juin 2014" ));
-        }
+        }*/
         
-        competenceAdapter.notifyDataSetChanged();
+        //competenceAdapter.notifyDataSetChanged();
 		
         /**
          * Fin swypelistview compétence
@@ -276,7 +288,7 @@ public class ProfilFragment extends Fragment {
             	// Récupération de la compétence selectionnée
             	Competence competUser = (Competence)ProfilFragment.this.spinnerCompetences.getSelectedItem();            	
             	// Récupération du niveau attribuée à la compétence
-            	float niveauCompetence = ProfilFragment.this.niveauCompetence.getNumStars();      
+            	float niveauCompetence = ProfilFragment.this.niveauCompetence.getRating();      
             	
             	ReseauCompetence r = new ReseauCompetence(ProfilFragment.this.getActivity(), ProfilFragment.this);
             	r.execute("1", competUser,niveauCompetence);  
@@ -303,6 +315,14 @@ public class ProfilFragment extends Fragment {
 		
     	return true;
     }
+    
+    public boolean recupCompetencesUtilisateur(Context co){
+    	
+    	ReseauCompetence r = new ReseauCompetence(this.getActivity(),this);
+    	r.execute("2",co);      
+		
+    	return true;
+    }
 
 
 	public ArrayListCompetence getListeCompetences() {
@@ -313,7 +333,59 @@ public class ProfilFragment extends Fragment {
 
 	public void setListeCompetences(ArrayListCompetence listeCompetencesRecup) {
 		this.listeCompetences = listeCompetencesRecup;
-	} 	
-        
+	} 			        
+	
+	/**
+	 * Récupère la liste de compétences d'un utilisateur
+	 * @return
+	 */
+	public ArrayListCompetenceUtilisateur getListeCompetencesUtilisateur() {
+		return listeCompetencesUtilisateur;
+	}
+
+	/**
+	 * Modifie la liste de compétence d'un utilisateur
+	 * @param listeCompetencesUtilisateur
+	 */
+	public void setListeCompetencesUtilisateur(
+			ArrayListCompetenceUtilisateur listeCompetencesUtilisateur) {
+		this.listeCompetencesUtilisateur = listeCompetencesUtilisateur;
+	}
+
+
+
+	public static void deleteSelectedItemCompetence(int position) {
+		listViewCompetence.closeOpenedItems();
+		listViewCompetence.dismiss(position);
+	}
+
+	public static void deleteSelectedItemCv(int position){
+		listViewCv.closeOpenedItems();
+		listViewCv.dismiss(position);
+	}
+
+	public List<ItemRow> getItemCompetence() {
+		return itemCompetence;
+	}
+
+
+
+	public void setItemCompetence(List<ItemRow> itemCompetence) {
+		this.itemCompetence = itemCompetence;
+	}
+
+
+
+	public ItemAdapterCompetence getCompetenceAdapter() {
+		return competenceAdapter;
+	}
+
+
+	public void setCompetenceAdapter(ItemAdapterCompetence competenceAdapter) {
+		this.competenceAdapter = competenceAdapter;
+	}
+	
+	
+		
 
 }
