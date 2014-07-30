@@ -162,6 +162,8 @@
     <string name="url_base_api">http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/</string>
     <string name="url_utilisateur">utilisateur/</string>
     <string name="url_pwd_update">/password-update.json</string>
+    <string name="url_competence">competence/</string>
+    <string name="url_utilisateur_competence_ajout">/password-update.json</string>
     <!-- FIN URL -->
     
     <!-- PARAMETRES -->

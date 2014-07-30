@@ -30,7 +30,7 @@ public class UpdatePasswordFragment extends Fragment {
 	Utilisateur currentUser;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View frag = inflater.inflate(R.layout.fragment_updatelogin,container, false);
+		View frag = inflater.inflate(R.layout.fragment_update_mdp,container, false);
 		
 		newMDP = (EditText)frag.findViewById(R.id.editTextNewMdp);
 		newAgainMDP = (EditText)frag.findViewById(R.id.editTextNewAgainMdp);

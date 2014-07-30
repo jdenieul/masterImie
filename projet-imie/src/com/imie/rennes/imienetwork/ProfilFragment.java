@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import network.ReseauCompetence;
+import network.ReseauExperience;
 
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
@@ -273,9 +274,12 @@ public class ProfilFragment extends Fragment {
             public void onClick(DialogInterface dialog, int id) {
                 
             	// Récupération de la compétence selectionnée
-            	Competence c = (Competence)ProfilFragment.this.spinnerCompetences.getSelectedItem();
+            	Competence competUser = (Competence)ProfilFragment.this.spinnerCompetences.getSelectedItem();            	
             	// Récupération du niveau attribuée à la compétence
-            	float niveauCompetence = ProfilFragment.this.niveauCompetence.getNumStars();            	
+            	float niveauCompetence = ProfilFragment.this.niveauCompetence.getNumStars();      
+            	
+            	ReseauCompetence r = new ReseauCompetence(ProfilFragment.this.getActivity(), ProfilFragment.this);
+            	r.execute("1", competUser,niveauCompetence);  
             	
             }
         });

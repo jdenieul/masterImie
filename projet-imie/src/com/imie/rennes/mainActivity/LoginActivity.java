@@ -39,6 +39,7 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        
         if (metrics.heightPixels < 800) {
         	setContentView(R.layout.activity_login_low_res);
 		}
@@ -46,6 +47,7 @@ public class LoginActivity extends ActionBarActivity {
         {
         	setContentView(R.layout.activity_login);
         }
+        
         Drawable background = this.getResources().getDrawable(R.drawable.background_popup);
         getSupportActionBar().setBackgroundDrawable(background);
         getSupportActionBar().setTitle(R.string.titre_login);
@@ -74,6 +76,7 @@ public class LoginActivity extends ActionBarActivity {
     
     @Override
     public void onBackPressed() {
+    	
     	if (backPressed + 2000 > System.currentTimeMillis()){
 			Intent homeIntent = new Intent(Intent.ACTION_MAIN);
 			homeIntent.addCategory( Intent.CATEGORY_HOME );
@@ -82,15 +85,16 @@ public class LoginActivity extends ActionBarActivity {
 		}
     	else Toast.makeText(getBaseContext(), "Appuyez de nouveau pour quitter!", Toast.LENGTH_SHORT).show();
         backPressed = System.currentTimeMillis();
+        
     }
     
     public void validConnexion(){
     	
-    	Utilisateur utilisateur = new Utilisateur(this);    
+    	/*Utilisateur utilisateur = new Utilisateur(this);    
     	Intent monIntent = new Intent(this, MainActivity.class);
-		this.startActivity(monIntent);
+		this.startActivity(monIntent);*/
 		//A REMETTRE
-		//login();
+		login();
 		
     	//createExperience();		
 		//adduUser();
@@ -102,8 +106,8 @@ public class LoginActivity extends ActionBarActivity {
      */
     public boolean login(){
     	
-    	//String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
-    	String url = "http://10.0.7.9:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";  
+    	String url = "http://imierennes.no-ip.biz:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";    	
+    	//String url = "http://10.0.7.9:10080/imie-network-website/web/app_dev.php/api/utilisateur/login";  
     	ReseauUser r = new ReseauUser(this);    	
     	r.execute("2",url, nom.getText().toString(), mdp.getText().toString());   
     	

@@ -13,6 +13,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -57,10 +58,11 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 		int result = 0;
 		param = Integer.parseInt((String)params[0]);
 		switch (param){
+		
 		//Creation competence
 			case 1:
 				
-				result = CreateCompetence((Competence)params[0]);
+				result = addCompetenceToUser((Competence)params[1],(Float) params[2]);
 				break;
 			case 2:
 				
@@ -81,7 +83,7 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 	protected void onPostExecute(Integer result) {
 		//Creation Competence
 		if((param == 1  && result == 200) || (param == 1 && result == 201)){
-			Intent monIntent = new Intent(context, AccueilEleveFragment.class);
+			Intent monIntent = new Intent(context, ProfilFragment.class);
 			context.startActivity(monIntent);
 		}
 		progDailog.dismiss();
@@ -98,15 +100,29 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
     }
 	
 	//Creation d'une competence
-	public int CreateCompetence(Competence competence){
+	public int addCompetenceToUser(Competence competence,float niveauCompetence){
+		
 		try {
 			
-			// R�cup�ration de l'utilisateur connect�
+			// Récupération de l'utilisateur connecté
 			preferences = this.context.getSharedPreferences("DEFAULT",
 					Activity.MODE_PRIVATE);
+	  		
+			// Récupération de l'utilisateur
+			Utilisateur currentUser = new Utilisateur();
+			Gson gson = new Gson();
+			if(preferences.contains("CURRENT_USER")){
+				String jsonCurrentUser = preferences.getString("CURRENT_USER", "");
+				currentUser = gson.fromJson(jsonCurrentUser, Utilisateur.class);
+			}else{
+				//TODO retour login ?
+			}
+
 			
-	  		String url = this.context.getResources().getString(R.string.text_adresse_api_webservice) + "competence/";
-	  		  
+	  		String url = this.context.getResources().getString(R.string.url_base_api) + 
+	  				this.context.getResources().getString(R.string.url_utilisateur) + currentUser.getId() + "/" +
+	  				this.context.getResources().getString(R.string.url_competence) +  competence.getId() + ".json";
+	  		
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
  
@@ -116,7 +132,7 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
             // 3. build jsonObject	                 
             JSONObject jsonObject = new JSONObject();                       
             jsonObject.put("token", preferences.getString("TOKEN_USER", ""));
-            jsonObject.put("competence", competence);
+            jsonObject.put("note", niveauCompetence);
             
             
             // 4. convert JSONObject to JSON to String
@@ -127,7 +143,7 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 	        nameValuePairs.add(new BasicNameValuePair("object", json)); 
  
             // 5. set httpPost Entity
-            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpPut.setEntity(new StringEntity(json));
  
             // 6. Set some headers to inform server about the type of the content   
             httpPut.setHeader("Content-type", "application/json");
@@ -144,7 +160,9 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
   	  } catch (Exception e) {
   	    Log.e("[PUT REQUEST]", "Network exception", e);
   	  }
+		
 	return 0;
+	
 	}
 	
 	public int listeCompetences(){
@@ -198,56 +216,6 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 		}     
 		
 		return value;
-	}
-	
-	public int addCompetenceToUser(Competence competence){
-		
-		/*try {
-			
-			// R�cup�ration de l'utilisateur connect�
-			preferences = this.context.getSharedPreferences("DEFAULT",
-					Activity.MODE_PRIVATE);
-			
-	  		String url = this.context.getResources().getString(R.string.text_adresse_api_webservice) + "competence/";
-	  		  
-            // 1. create HttpClient
-            HttpClient httpclient = new DefaultHttpClient();
- 
-            // 2. make POST request to the given URL
-            HttpPut httpPut = new HttpPut(url);
- 
-            // 3. build jsonObject	                 
-            JSONObject jsonObject = new JSONObject();                       
-            jsonObject.put("token", preferences.getString("TOKEN_USER", ""));
-            jsonObject.put("competence", competence);
-            
-            
-            // 4. convert JSONObject to JSON to String
-            String json = jsonObject.toString();
-            Log.e("json", json);
-            
-            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	        nameValuePairs.add(new BasicNameValuePair("object", json)); 
- 
-            // 5. set httpPost Entity
-            httpPut.setEntity(new UrlEncodedFormEntity(nameValuePairs));
- 
-            // 6. Set some headers to inform server about the type of the content   
-            httpPut.setHeader("Content-type", "application/json");
-            
-            // 7. Execute POST request to the given URL
-            HttpResponse httpResponse = httpclient.execute(httpPut);
- 
-            // 8. receive response as inputStream
-            int value = (int)httpResponse.getStatusLine().getStatusCode();
-            Log.e("code", Integer.toString(value));
-            return value;
-            
-  		  
-  	  } catch (Exception e) {
-  	    Log.e("[PUT REQUEST]", "Network exception", e);
-  	  }
-	return 0;*/
 	}
 
 }
