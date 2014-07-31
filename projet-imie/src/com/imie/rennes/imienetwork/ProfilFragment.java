@@ -91,7 +91,7 @@ public class ProfilFragment extends Fragment {
 		 */
 		itemCompetence = new ArrayList<ItemRow>();
 		
-		competenceAdapter = new ItemAdapterCompetence(getActivity(),R.layout.custom_row,itemCompetence);
+		competenceAdapter = new ItemAdapterCompetence(getActivity(),R.layout.custom_row,itemCompetence,this);
 		
 		listViewCompetence.setSwipeListViewListener(new BaseSwipeListViewListener() {
 			
@@ -148,14 +148,6 @@ public class ProfilFragment extends Fragment {
 	
 		listViewCompetence.setAdapter(competenceAdapter);
 		;
-        //TODO Récupération compétences
-		/*
-        for(int i=0;i<5;i++)
-        {
-        	itemCompetence.add(new ItemRow("Compétence "+i,"NIveau 2","Ajoutée le 14 juin 2014" ));
-        }*/
-        
-        //competenceAdapter.notifyDataSetChanged();
 		
         /**
          * Fin swypelistview compétence
@@ -233,7 +225,7 @@ public class ProfilFragment extends Fragment {
         // Action lors du clique sur le bouton "+" d'ajout de compétences
         btnAjoutCompetence.setOnClickListener(new Button.OnClickListener(){
 			public void onClick(View v){
-				dialogueAjoutCompetence();
+				dialogueAjoutCompetence(0,"");
 			}
 		});
         
@@ -258,8 +250,9 @@ public class ProfilFragment extends Fragment {
 	    return (int) px;
 	}
 	
-	public void dialogueAjoutCompetence(){
+	public void dialogueAjoutCompetence(int id, String body){
 		
+ 		
 		Drawable background = getResources().getDrawable(R.drawable.background_popup);
 		
 		//Creation nouvelle alerte dialogue
@@ -267,7 +260,8 @@ public class ProfilFragment extends Fragment {
     	View v = this.getActivity().getLayoutInflater().inflate(R.layout.fragment_ajout_competence_eleve, null); 
     	dialogueComp.setCancelable(true);
         // Modification du spinner
-        spinnerCompetences = (Spinner)v.findViewById(R.id.spinnerListeCompetences);      
+        spinnerCompetences = (Spinner)v.findViewById(R.id.spinnerListeCompetences); 
+        
         niveauCompetence = (RatingBar)v.findViewById(R.id.ratingBarNiveau);
 		// Appel des compétences
         
@@ -306,6 +300,7 @@ public class ProfilFragment extends Fragment {
         //Creation et affichage
         AlertDialog alert11 = dialogueComp.create();
         alert11.show();
+		
     }	
 	
     public boolean recupCompetences(Context co){

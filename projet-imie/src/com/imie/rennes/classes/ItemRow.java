@@ -2,6 +2,7 @@ package com.imie.rennes.classes;
 
 public class ItemRow {
 
+	private int idItem;
 	private String itemName;
 	private String body;
 	private String date;
@@ -29,14 +30,31 @@ public class ItemRow {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+
+	public int getIdItem() {
+		return idItem;
+	}
+	public void setIdItem(int idItem) {
+		this.idItem = idItem;
+	}
+	
 	/**
+	 * Constructeur
+	 * @param idItem
 	 * @param itemName
+	 * @param body
+	 * @param date
 	 */
-	public ItemRow(String itemName, String body, String date) {
+	public ItemRow(int idItem, String itemName, String body, String date) {
 		super();
+		this.idItem = idItem;
 		this.itemName = itemName;
 		this.body = body;
 		this.date = date;
 	}
+	
+	
+	
+	
 	
 }

@@ -100,7 +100,7 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 			// Remplie la liste de compétences de l'utilisateur
 			for (UtilisateurCompetence compet : this.fragmentParent.getListeCompetencesUtilisateur().getCompetences()) {
 				
-				this.fragmentParent.getItemCompetence().add(new ItemRow(compet.getCompetence().getLibelle() ,"Niveau " + compet.getNote() + ",","" ));
+				this.fragmentParent.getItemCompetence().add(new ItemRow(compet.getCompetence().getId(),compet.getCompetence().getLibelle() ,"Niveau : " + compet.getNote(),"" ));
 				
 			}
 			
@@ -271,6 +271,7 @@ public class ReseauCompetence extends AsyncTask<Object,Void,Integer>{
 	        if (value == 200){
 	        	
 		        JSONObject jsonListeCompetences = new JSONObject(EntityUtils.toString(response.getEntity()));
+		        // Récupère l'objet json et le parse en liste de compétences d'utilisateur
 		        ArrayListCompetenceUtilisateur arrListCompetenceTemp = new ArrayListCompetenceUtilisateur();
 				arrListCompetenceTemp = gson.fromJson(jsonListeCompetences.toString(), ArrayListCompetenceUtilisateur.class);				
 				

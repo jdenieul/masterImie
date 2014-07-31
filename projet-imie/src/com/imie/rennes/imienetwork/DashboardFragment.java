@@ -48,7 +48,7 @@ public class DashboardFragment extends Fragment{
 		listViewEvenements = (SwipeListView)frag.findViewById(R.id.listViewEvenement);
 		nombreMessage = (TextView)frag.findViewById(R.id.tvNombreMessages);
 		
-		//Récupération préférences
+		//Rï¿½cupï¿½ration prï¿½fï¿½rences
 		this.preferences = this.getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		
 		/**
@@ -95,7 +95,7 @@ public class DashboardFragment extends Fragment{
 		//SEt nb message
 		nombreMessage.setText(String.valueOf(nbMessage));
 		
-		//Vérif nombre message pour gestion padding
+		//Vï¿½rif nombre message pour gestion padding
 		if(nbMessage == 0){
 			nombreMessage.setVisibility(View.GONE);
 		}else if (nbMessage < 10){
@@ -160,11 +160,11 @@ public class DashboardFragment extends Fragment{
 	
 		listViewEvenements.setAdapter(adapter);
         
-        //TODO Récupération event bdd
+        //TODO Rï¿½cupï¿½ration event bdd
         for(int i=0;i<3;i++)
         {
-        	itemData.add(new ItemRow(getString(R.string.text_exemple_descri_event)+i, 
-        			getString(R.string.text_exemple_addresse_event), getString(R.string.text_exemple_date_event) ));
+        	/*itemData.add(new ItemRow(getString(R.string.text_exemple_descri_event)+i, 
+        			getString(R.string.text_exemple_addresse_event), getString(R.string.text_exemple_date_event) ));*/
         	
         }
         

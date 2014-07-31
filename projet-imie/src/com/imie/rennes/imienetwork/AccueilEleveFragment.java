@@ -65,7 +65,7 @@ public class AccueilEleveFragment extends Fragment {
 		
 		itemDataComp=new ArrayList<ItemRow>();
 		
-		adapterComp=new ItemAdapterCompetence(getActivity(),R.layout.custom_row,itemDataComp);
+		//adapterComp=new ItemAdapterCompetence(getActivity(),R.layout.custom_row,itemDataComp,this);
 		
 		listViewCompetence.setSwipeListViewListener(new BaseSwipeListViewListener() {
 			@Override
@@ -126,7 +126,7 @@ public class AccueilEleveFragment extends Fragment {
         
         for(int i=0;i<10;i++)
         {
-        	itemDataComp.add(new ItemRow("Competence "+i, "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "10/04/2014" ));
+        	//itemDataComp.add(new ItemRow("Competence "+i, "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "10/04/2014" ));
         }
         
         adapterComp.notifyDataSetChanged();
@@ -196,7 +196,7 @@ public class AccueilEleveFragment extends Fragment {
         monCV.setEmplacement("/sdcard/example.pdf");
         monCV.setId(1);
         
-        itemDataCV.add(new ItemRow("Curriculum Vitae", "Cliquez ici pour accéder à votre Curriculum Vitae.", monCV.getDateCreation() ));
+      //  itemDataCV.add(new ItemRow("Curriculum Vitae", "Cliquez ici pour accï¿½der ï¿½ votre Curriculum Vitae.", monCV.getDateCreation() ));
         
         adapteurCv.notifyDataSetChanged();
 		

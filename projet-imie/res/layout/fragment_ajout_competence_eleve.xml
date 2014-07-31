@@ -10,7 +10,8 @@
 	    android:layout_height="wrap_content"
 	    android:drawSelectorOnTop="true"
 	    android:entryValues="@array/array_name_values"
-	    style="@style/CustomEditTextView" />  
+	    style="@style/CustomEditTextView"
+	    android:background="@drawable/custom_edittext" />  
 		
 
     <RatingBar

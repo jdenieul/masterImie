@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.imie.rennes.classes.ItemRow;
 import com.imie.rennes.imienetwork.AccueilEleveFragment;
+import com.imie.rennes.imienetwork.ProfilFragment;
 import com.imie.rennes.imienetwork.R;
 import com.jensdriller.libs.undobar.UndoBar.Listener;
 
@@ -31,15 +32,23 @@ public class ItemAdapterCompetence extends ArrayAdapter<ItemRow> implements List
 	List<ItemRow> data; 
 	Context context;
 	int layoutResID;
-
-public ItemAdapterCompetence(Context context, int layoutResourceId,List<ItemRow> data) {
-	super(context, layoutResourceId, data);
+	ProfilFragment profilFragmentParent;	
 	
-	this.data=data;
-	this.context=context;
-	this.layoutResID=layoutResourceId;
-
-}
+	/**
+	 * Constructeur de l'itemAdapterCompetence
+	 * @param context
+	 * @param layoutResourceId
+	 * @param data
+	 */
+	public ItemAdapterCompetence(Context context, int layoutResourceId,List<ItemRow> data,ProfilFragment p) {
+		super(context, layoutResourceId, data);
+		
+		this.data=data;
+		this.context=context;
+		this.layoutResID=layoutResourceId;
+		this.profilFragmentParent = p;
+	
+	}
  
 @Override
 public View getView(final int position, View convertView, ViewGroup parent) {
@@ -72,14 +81,25 @@ public View getView(final int position, View convertView, ViewGroup parent) {
         holder.body.setText(itemdata.getBody());
         holder.date.setText(itemdata.getDate());
       
+        /**
+         * Lors du clic sur le bouton modifier ?
+         */
         holder.button1.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				dialogueModifierCompetence();
+				
+				//dialogueModifierCompetence();
+				// Appel de la fonction qui lance la dialogBox
+				ItemRow itemData = data.get(position);
+				
+				ItemAdapterCompetence.this.profilFragmentParent.dialogueAjoutCompetence(itemData.getIdItem(),itemData.getBody());
 			}
 		});
         
+        /**
+         * Lors du clic sur le bouton supprimer ?
+         */
 		 holder.button2.setOnClickListener(new View.OnClickListener() {
 					
 			@Override
